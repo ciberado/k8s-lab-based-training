@@ -43,11 +43,10 @@ spec:
 EOF
 ```
 
-<details>
-<summary>
+## Applying resource constraints
+
 How would you modify the manifest to specify resource limits? Our application usually
 needs 100MB of RAM, with spikes up to 200MB.
-</summary>
 
 ```yaml
 cat << EOF > stress.yaml
@@ -67,7 +66,6 @@ spec:
         ▒▒▒▒▒▒: "100Mi"
 EOF
 ```
-</details>
 
 * Deploy de demo
 
@@ -82,16 +80,20 @@ kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 200M --vm-hang 60 -t 60
 kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 120M --vm-hang 60 -t 60 -v
 ```
 
+## Discussion
+
+Can you please explain the difference in the behavior of both commands?
+
 <details>
 <summary>
-Can you please explain the difference in the behavior of both commands?
+Solution:
 </summary>
 
 ▒▒▒ ▒▒▒▒▒ ▒▒▒ ▒▒▒▒ ▒▒ ▒▒▒▒▒▒▒▒, ▒▒ `▒▒▒▒▒▒` ▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒ ▒▒ ▒▒▒▒ ▒▒▒ ▒▒▒▒ ▒▒▒▒▒▒ ▒▒▒▒
 ▒▒▒▒▒▒ ▒▒ ▒▒ ▒▒▒▒▒▒▒▒▒ (▒▒ ▒▒▒▒▒▒▒ ▒▒▒ ▒▒▒▒▒▒ ▒▒ ▒▒▒ ▒▒▒▒▒▒▒▒▒ `▒-▒▒▒▒▒`). ▒▒ ▒▒ ▒▒▒▒▒▒▒▒▒
 ▒▒ ▒▒▒ ▒▒▒ ▒▒▒ ▒▒ ▒▒ ▒▒▒▒▒▒ ▒▒▒▒ ▒▒▒▒▒▒, ▒▒ ▒▒▒▒▒ ▒▒▒'▒ ▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒.
 
-</detail>
+</details>
 
 # Legacy programs and bad behavior
 
