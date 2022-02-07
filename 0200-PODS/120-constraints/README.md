@@ -77,8 +77,8 @@ metadata:
   name: frontend
 spec:
   replicas: 3
-  ▒▒▒▒▒▒▒▒:
-    ▒▒▒▒▒▒▒▒▒▒▒:
+  selector:
+    matchLabels:
       programar.cloud/tier: frontend
   template:
     metadata:
