@@ -67,7 +67,7 @@ echo We are going to use $FRONT_END_NODE
 kubectl ▒▒▒▒▒ ▒▒▒▒ "$FRONT_END_NODE" programar.cloud/$USER-owned=$USER
 ```
 
-* Create a deployment specifying labels:
+* Create a deployment specifying labels for selecting the node:
 
 ```yaml
 cat << EOF > nginx-front-end.yaml
