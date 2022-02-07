@@ -16,14 +16,14 @@ kubectl config set-context --namespace demo-$USER --current
 * Get one node, we will use it as our *taint* target
 
 ```
-export SPECIAL_NODE="$(kubectl get nodes -o jsonpath='{▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒.name}')"
+export SPECIAL_NODE="$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')"
 echo We are going to use $SPECIAL_NODE
 ```
 
 * Mark it with a *taint* named `special` (this word is arbitrary, could be `potato`). Set its value to `true` and forbid any pod not having that combination from being scheduled on it thanks to the keyword `NoSchedule`. Other possible options are `NoExecute` (will evict existing pods in the node if they don't have the *toleration*) and `PreferNoSchedule`.
 
 ```
-kubectl ▒▒▒▒▒ ▒▒▒▒▒ $SPECIAL_NODE special-$USER=true:NoSchedule
+kubectl taint nodes $SPECIAL_NODE special-$USER=true:NoSchedule
 kubectl describe node $SPECIAL_NODE | grep Taints
 ```
 
@@ -69,7 +69,7 @@ TOTAL=$(kubectl get pods -o wide \
 echo Total number of pods: $TOTAL.
 
 PODS_IN_SPECIAL=$(kubectl get pods -o wide \
-  --field-▒▒▒▒▒▒▒▒ spec.nodeName=$SPECIAL_NODE \
+  --field-selector spec.nodeName=$SPECIAL_NODE \
   | tail -n "+2" \
   | wc -l)
 echo Pods in the special node: $PODS_IN_SPECIAL.
@@ -95,8 +95,8 @@ spec:
     spec:
       tolerations:
       - key: "special-$USER"
-        operator: "▒▒▒▒▒▒"
-        effect: "▒▒▒▒▒▒▒▒▒▒"                 
+        operator: "Exists"
+        effect: "NoSchedule"
       containers:
       - name: main
         image: bash
@@ -116,7 +116,7 @@ kubectl apply -f deployment.yaml
 * For creating the new `taint`
 
 ```bash
-kubectl ▒▒▒▒▒ ▒▒▒▒▒ $SPECIAL_NODE very-special-$USER=true:No▒▒▒▒▒▒▒
+kubectl taint nodes $SPECIAL_NODE very-special-$USER=true:NoExecute
 ```
 
 * For watching the `pods` transitioning to another node
@@ -128,7 +128,7 @@ kubectl get pods --watch
 * Removing the `taint`
 
 ```bash
-kubectl ▒▒▒▒▒▒ ▒▒▒▒▒ $SPECIAL_NODE very-special-$USER=true:▒▒▒▒▒▒▒▒
+kubectl taint nodes $SPECIAL_NODE very-special-$USER=true:NoExecute-
 ```
 
 
