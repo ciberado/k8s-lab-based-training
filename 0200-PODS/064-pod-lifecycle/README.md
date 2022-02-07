@@ -85,7 +85,7 @@ kubectl run restart-always \
   --restart=Always \
   -- sh -c "exit 1"
 
-kubectl get pod restart-always -n demo-$USER -owide --watch
+kubectl get pod -l run=restart-always --show-labels -owide --watch
 ```
 
 * Remove the namespace
