@@ -51,7 +51,7 @@ kubectl apply -f pokemon.yaml && kubectl get pods --watch
 
 ```bash
 PORT=$(( ( RANDOM % 100 )  + 8000 ))
-kubectl ▒▒▒▒-▒▒▒▒▒▒▒ pokemon --address 0.0.0.0 -n demo-$USER $PORT:80 &
+kubectl port-forward pokemon --address 0.0.0.0 -n demo-$USER $PORT:80 &
 PID=$!
 echo The tunnel PID is $PID and the endpoint address is http://localhost:$PORT
 ```
@@ -64,11 +64,11 @@ curl localhost:$PORT/health
 
 <details>
 <summary>
-Use `kubectl` against the `pokemon` pod to check if the main process (`node`) is being ran (see [pgrep](https://dashdash.io/1/pgrep)).
+Use `kubectl exec` against the `pokemon` pod to check if the main process (`node`) is being ran (see [pgrep](https://dashdash.io/1/pgrep)).
 </summary>
 
 ```bash
-kubectl ▒▒▒▒ -it pokemon -- ▒▒▒▒▒ ▒▒▒▒
+kubectl exec -it pokemon -- pgrep node
 ```
 </details>
 
@@ -91,24 +91,24 @@ spec:
     ports:
     - name: server-port         # <-- use named ports for clarity 
       containerPort: 80
-    ▒▒▒▒▒▒▒▒▒▒▒▒:               # <-- Wait before starting other probes
-      ▒▒▒▒▒▒▒:
-        ▒▒▒▒: server-port
-        ▒▒▒▒: "▒▒▒▒▒▒▒"
+    startupProbe:               # <-- Wait before starting other probes
+      httpGet:
+        port: server-port
+        path: "/health"
       failureThreshold: 5
       periodSeconds: 15         # <-- wait up to 5*10 seconds
-    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒:             # <-- send me traffic if it is ok
-      ▒▒▒▒▒▒▒:
-        ▒▒▒▒: server-port
-        ▒▒▒▒: "/health"
+    readinessProbe:             # <-- send me traffic if it is ok
+      httpGet:
+        port: server-port
+        path: "/health"
       initialDelaySeconds: 0    # <-- Not needed, already startuped
       periodSeconds: 20         # <-- Check three times per minute
       timeoutSeconds: 5         # <-- Fail if it takes more than this
       successThreshold: 1       # <-- First green means it's ok
       failureThreshold: 3       # <-- Two consecutive ko stops traffic to the pod
-    ▒▒▒▒▒▒▒▒▒▒▒▒▒:
+    livenessProbe:
       exec:
-        ▒▒▒▒▒▒▒: ["pgrep", "-x", "node"]  # <-- This is a js application for node
+        command: ["pgrep", "-x", "node"]  # <-- This is a js application for node
       initialDelaySeconds: 1
       periodSeconds: 5
       successThreshold: 1
@@ -145,7 +145,7 @@ kubectl get pods -owide --watch
 * Troubleshot the pod (check the events to find the unhealthy message)
 
 ```bash
-kubectl ▒▒▒▒▒▒▒ pod pokemon
+kubectl describe pod pokemon
 ```
 
 ## Cleanup

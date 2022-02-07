@@ -154,27 +154,27 @@ Also, priorities can be assigned to `ResourceQuotas`, so `pods` with different p
 ```yaml
 cat << EOF > priorities.yaml
 apiVersion: scheduling.k8s.io/v1
-kind: ▒▒▒▒▒▒▒▒▒▒▒▒▒
+kind: PriorityClass
 metadata:
-  name: ▒▒▒▒
+  name: high
 value: 1000000
-globalDefault: ▒▒▒▒▒
+globalDefault: false
 ---
 
 apiVersion: scheduling.k8s.io/v1
-kind: ▒▒▒▒▒▒▒▒▒▒▒▒▒
+kind: PriorityClass
 metadata:
-  name: ▒▒▒▒▒▒
+  name: normal
 value: 1000
-globalDefault: ▒▒▒▒
+globalDefault: true
 ---
 
 apiVersion: scheduling.k8s.io/v1
-kind: ▒▒▒▒▒▒▒▒▒▒▒▒▒
+kind: PriorityClass
 metadata:
-  name: ▒▒▒
+  name: low
 value: 100
-globalDefault: ▒▒▒▒▒
+globalDefault: false
 EOF
 ```
 
@@ -182,44 +182,47 @@ EOF
 ```yaml
 cat << EOF > quotas.yaml
 apiVersion: v1
-kind: ▒▒▒▒▒▒▒▒▒▒▒▒▒
+kind: ResourceQuota
 metadata:
   name: development-resources
 spec:
-  ▒▒▒▒:
+  hard:
     requests.cpu: 1000m
     limits.cpu: 1500m
     requests.memory: 1Gi
     limits.memory: 1.5Gi
+    #requests.storage: 1Gi 
     count/services: 2
     count/pods: 10
-  ▒▒▒▒▒▒▒▒▒▒▒▒▒:
+  scopeSelector:
     matchExpressions:
     - operator : In
       scopeName: PriorityClass
-      values: ["▒▒▒", "▒▒▒▒▒▒"]
+      values: ["low", "normal"]
 ---
 apiVersion: v1
-kind: ▒▒▒▒▒▒▒▒▒▒▒▒▒
+kind: ResourceQuota
 metadata:
   name: development-resources
 spec:
-  ▒▒▒▒:
+  hard:
     requests.cpu: 2000m
     limits.cpu: 3000m
     requests.memory: 2Gi
     limits.memory: 3Gi
+    #requests.storage: 2Gi 
     count/services: 4
     count/pods: 20
-  ▒▒▒▒▒▒▒▒▒▒▒▒▒:
+  scopeSelector:
     matchExpressions:
     - operator : In
       scopeName: PriorityClass
-      values: ["▒▒▒▒"]
+      values: ["high"]
 EOF
 ```
 
 </details>
+
 
 
 ## Cleanup
