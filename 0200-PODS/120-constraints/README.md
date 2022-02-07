@@ -86,7 +86,7 @@ spec:
         programar.cloud/tier: frontend
     spec:
       ▒▒▒▒▒▒▒▒▒▒▒▒:
-        programar.cloud/$USER-owned=$USER
+        programar.cloud/$USER-owned: $USER
       containers:
       - name: nginx
         image: nginx
