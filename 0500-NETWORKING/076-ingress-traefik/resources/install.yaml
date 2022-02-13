@@ -1,0 +1,304 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: traefik
+  name: _NAMESPACE_PLACEHOLDER_
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Kustomize
+    app.kubernetes.io/name: traefik
+    helm.sh/chart: traefik-10.3.6
+  name: traefik
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Kustomize
+    app.kubernetes.io/name: traefik
+    helm.sh/chart: traefik-10.3.6
+  name: traefik
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - endpoints
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - ingressclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses/status
+  verbs:
+  - update
+- apiGroups:
+  - traefik.containo.us
+  resources:
+  - ingressroutes
+  - ingressroutetcps
+  - ingressrouteudps
+  - middlewares
+  - middlewaretcps
+  - tlsoptions
+  - tlsstores
+  - traefikservices
+  - serverstransports
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Kustomize
+    app.kubernetes.io/name: traefik
+    helm.sh/chart: traefik-10.3.6
+  name: traefik
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik
+subjects:
+- kind: ServiceAccount
+  name: traefik
+  namespace: _NAMESPACE_PLACEHOLDER_
+---
+apiVersion: v1
+data:
+  traefik.yml: |
+    global:
+      checkNewVersion: false
+      sendAnonymousUsage: false
+    api:
+      dashboard: true
+    ping: {}
+    accesslog: {}
+    log:
+      level: DEBUG
+    metrics:
+      prometheus:
+        entryPoint: metrics
+    entryPoints:
+      web:
+        address: ":8000"
+      websecure:
+        address: ":8443"
+      metrics:
+        address: ":8082"
+      traefik:
+        address: ":9000"
+    providers:
+      kubernetesCRD: {}
+      kubernetesIngress: {}
+      file:
+        filename: /etc/traefik/traefik.yml
+        watch: true
+    tls:
+      stores:
+        default:
+          defaultCertificate:
+            certFile: /ssl/tls.crt
+            keyFile: /ssl/tls.key
+      options:
+        default:
+          minVersion: VersionTLS12
+          sniStrict: false
+          cipherSuites:
+            - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+            - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+            - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+            - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+            - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+      certificates:
+        - certFile: /ssl/tls.crt
+          keyFile: /ssl/tls.key
+    serverstransport:
+      insecureskipverify: true
+kind: ConfigMap
+metadata:
+  name: traefik-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/backend-protocol: http
+    alb.ingress.kubernetes.io/healthcheck-path: /ping
+    alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0.0/0
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+  labels:
+    app.kubernetes.io/name: traefik
+  name: traefik-external
+spec:
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP
+    targetPort: web
+  - name: websecure
+    port: 443
+    protocol: TCP
+    targetPort: websecure
+  - name: traefik
+    port: 8080
+    protocol: TCP
+    targetPort: traefik
+  selector:
+    app.kubernetes.io/name: traefik
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: null
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Kustomize
+    app.kubernetes.io/name: traefik
+    helm.sh/chart: traefik-10.3.6
+  name: traefik
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/name: traefik
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/instance: traefik
+        app.kubernetes.io/managed-by: Kustomize
+        app.kubernetes.io/name: traefik
+        helm.sh/chart: traefik-10.3.6
+    spec:
+      containers:
+      - image: traefik:2.5.3
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ping
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: traefik
+        ports:
+        - containerPort: 9000
+          name: traefik
+          protocol: TCP
+        - containerPort: 8000
+          name: web
+          protocol: TCP
+        - containerPort: 8443
+          name: websecure
+          protocol: TCP
+        - containerPort: 8082
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /ping
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        resources:
+          requests:
+            cpu: 200m
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 65532
+          runAsNonRoot: true
+          runAsUser: 65532
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /etc/traefik/traefik.yml
+          name: config
+          subPath: traefik.yml
+        - mountPath: /ssl
+          name: ssl
+      hostNetwork: false
+      securityContext:
+        fsGroup: 65532
+      serviceAccountName: traefik
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - emptyDir: {}
+        name: data
+      - emptyDir: {}
+        name: tmp
+      - configMap:
+          name: traefik-conf
+        name: config
+      - emptyDir: {}
+        name: ssl
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Kustomize
+    app.kubernetes.io/name: traefik
+    helm.sh/chart: traefik-10.3.6
+  name: traefik
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/name: traefik
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: traefik
+spec:
+  maxReplicas: 2
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: traefik
+  targetCPUUtilizationPercentage: 75
