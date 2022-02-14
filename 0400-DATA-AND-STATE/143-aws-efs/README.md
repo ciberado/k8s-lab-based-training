@@ -44,14 +44,14 @@ MOUNT_TARGET_GROUP_ID=$(aws ec2 create-security-group \
   --group-name $MOUNT_TARGET_GROUP_NAME \
   --description "$MOUNT_TARGET_GROUP_DESC" \
   --vpc-id $VPC_ID  \
-  --query .GroupId \
+  --query GroupId \
   --output text)
 aws ec2 authorize-security-group-ingress \
   --group-id $MOUNT_TARGET_GROUP_ID \
   --protocol tcp \
   --port 2049 \
   --cidr $CIDR_BLOCK
-echo New security group: $MOUNT_TARGET_SG
+echo New security group: $MOUNT_TARGET_GROUP_ID
 ```
 
 * Create the EFS
@@ -147,16 +147,16 @@ kubectl apply -f efs-sc.yaml
 ```yaml
 cat << EOF > efs-persistent-volume.yaml
 apiVersion: v1
-kind: PersistentVol▒▒▒
+kind: PersistentVolume
 metadata:
-  name: efs-persistent-volume
+  name: efs-persistent-volume-$USER
 spec:
   capacity:
     storage: 5Gi
-  volumeMode: Filesystem
+  volumeMode: Filesyst▒▒
   accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Reta▒▒
+    - ReadWriteM▒▒▒
+  persistentVolumeReclaimPolicy: Re▒▒▒▒
   storageClassName: efs-sc
   csi:
     driver: efs.csi.aws.com
@@ -178,13 +178,14 @@ kubectl apply -f efs-persistent-volume.yaml
 ```yaml
 cat << EOF > efs-persistent-volume-claim.yaml
 apiVersion: v1
-kind: PersistentVolumeCl▒▒▒
+kind: PersistentVolumeClaim
 metadata:
   name: efs-persistent-volume-claim
 spec:
-  accessModes:
-    - R▒▒▒WriteM▒▒▒
   storageClassName: efs-sc
+  volumeName: efs-persistent-volume-$USER
+  accessModes:
+    - ReadWriteM▒▒▒
   resources:
     requests:
       storage: 5Gi
@@ -223,8 +224,8 @@ spec:
       name: pod-efs-volume
   volumes:
   - name: pod-efs-volume
-    persistentVolumeC▒▒▒▒:
-      claimName: efs-persistent-volume-claim
+    persistentVolumeCl▒▒▒:
+      claimName: efs-persistent-volume-▒▒▒▒▒
 EOF
 ```
 
