@@ -188,12 +188,6 @@ kubectl describe pvc datadisk-claim
 aws ec2 describe-volumes --volume-id $VOLUME_ID --query Volumes[].Attachments
 ```
 
-* And see how, now, the EBS resource is attached to an EC2 instance
-
-```bash
-aws ec2 describe-volumes --volume-id $VOLUME_ID --query Volumes[].Attachments
-```
-
 ## Mounting EBS disks on pods
 
 * Declare a pod with with the volume attached, and the affinity to the pod
