@@ -20,25 +20,7 @@ kubectl config set-context --namespace demo-$USER --current
 
 Service discovery allows to find resources in the k8s network, mainly using DNS. This exercise will show you the network scope of *pods* and *services*.
 
-* Deploy a simple bash `pod`
-
-```yaml
-cat << EOF > bash.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: bash
-  labels:
-    app: bash-app
-spec:
-  containers:
-  - name: bash
-    image: bash
-    command: ['sh', '-c', 'echo bash pod started && sleep 60000']
-EOF
-```
-
-* And a slightly more sophisticated `service`-`pod` pair:
+* Let's create a pair consistent in a `pod` and a `service`
 
 ```yaml
 cat << EOF > nginx.yaml
@@ -69,10 +51,34 @@ spec:
 EOF
 ```
 
-* Deploy all the resources with
+* Deploy the manifest with the two document using
 
 ```bash
-kubectl apply -f bash.yaml,nginx.yaml
+kubectl apply -f nginx.yaml
+```
+
+* Now define another `pod` from which we will contact the `nginx` one
+
+```yaml
+cat << EOF > bash.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bash
+  labels:
+    app: bash-app
+spec:
+  containers:
+  - name: bash
+    image: bash
+    command: ['sh', '-c', 'echo bash pod started && sleep 60000']
+EOF
+```
+
+* And deploy it
+
+```bash
+kubectl apply -f bash.sh
 ```
 
 ## EKS pod IPs and domain IPs
@@ -126,6 +132,15 @@ kubectl exec -it bash -- getent hosts nginx-service.demo-$USER.svc.cluster.local
 * Even if there is no DNS server up and running in the cluster, it is possible to find the IP of any `service` because they are all listed as environment variables (yes, yes, we know)
 
 ```bash
+kubectl exec -it bash -- env | grep SERVICE
+```
+
+* As you can see, only the `service` existing at the time the `pod` was create appears. But if you force the recreation of the pod, the `nginx` `service` will be added to the environment variables when the container is created
+
+```bash
+kubectl delete -f bash.yaml
+kubectl apply -f bash.yaml
+sleep 10
 kubectl exec -it bash -- env | grep SERVICE
 ```
 

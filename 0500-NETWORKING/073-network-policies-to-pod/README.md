@@ -18,7 +18,7 @@ kubectl config set-context --namespace demo-$USER --current
 ```bash
 helm repo add projectcalico https://docs.projectcalico.org/charts
 helm repo update
-helm install calico projectcalico/tigera-operator --version v3.21.4
+helm install -n default calico projectcalico/tigera-operator --version v3.21.4
 ```
 
 * Check how everything is in place
