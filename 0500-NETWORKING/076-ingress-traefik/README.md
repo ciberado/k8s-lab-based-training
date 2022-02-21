@@ -17,9 +17,7 @@
 
 * Traefik can be configured with dynamic or static configuration, in our use case we will be going for static to make the lab less complex.
 * Traefik can be installed using helm charts, we will be installing a helm chart version through kustomize to simplify the process.
-
 * We will play with some of the key components of Traefik like the EntryPoints, the Routers, or the Middlewares.
-
 
 ## Traefik Dataflow Diagram
 
