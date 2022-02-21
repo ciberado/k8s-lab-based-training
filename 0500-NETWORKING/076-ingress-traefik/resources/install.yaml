@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   labels:
     name: traefik
-  name: _TRAEFIK_NAMESPACE_PLACEHOLDER_
+  name: _NAMESPACE_PLACEHOLDER_
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -85,7 +85,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: traefik
-  namespace: _TRAEFIK_NAMESPACE_PLACEHOLDER_
+  namespace: _NAMESPACE_PLACEHOLDER_
 ---
 apiVersion: v1
 data:
