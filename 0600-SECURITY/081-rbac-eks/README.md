@@ -54,7 +54,7 @@ ASSUME_AWSDEVELOPERROLE_POLICY=$(echo -n '{
       "Action": "sts:AssumeRole",
       "Resource": "arn:aws:iam::'; echo -n "$ACCOUNT_ID"; echo -n ":role/AWSDeveloperRole${USER}"; echo -n '"
     },
-    {   "Sid" : "Allow cluster listing",
+    {   "Sid" : "AllowClusterListing",
         "Effect": "Allow",
         "Action": [
             "eks:DescribeCluster",
