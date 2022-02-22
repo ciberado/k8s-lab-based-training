@@ -5,8 +5,8 @@ You will find in the documentation how to declare apps and projects for ArgoCD u
 We will create the namespace, and set the context to keep that ns as the default one:
 
 ```bash
-kubectl create ns demo-$USER
-kubectl config set-context --namespace demo-$USER --current
+kubectl create ns demo-argocd-$USER
+kubectl config set-context --namespace demo-argocd-$USER --current
 ```
 
 We can install ArgoCD in our cluster with the following commands:
