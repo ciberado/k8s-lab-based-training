@@ -41,16 +41,14 @@ kubectl config set-context --namespace demo-$USER --current
 
 ```bash
 kubectl run run-once-and-fail \
-  --image=busybox \
+  --image bash \
   --restart=Never \
-  -- sh -c "exit 1"
+  -- bash -c "exit 1"
 
-kubectl get pod run-once-and-fail \
-  -owide \
-  --watch
+kubectl get pod run-once-and-fail -owide
 ```
 
-* Press `ctrl+c` and check the resulting status of the pod (`Error`)
+* Check the resulting status of the pod (`Error`)
 
 ```bash
 kubectl describe pod run-once-and-fail
@@ -63,6 +61,7 @@ How can you know if the pod has been finished with a `Succeed` or a `Failed` exi
 
 ```bash
 kubectl describe pod run-once-and-fail | grep Status
+kubectl get pod run-once-and-fail -o jsonpath="{.status.containerStatuses[].state}" | jq
 ```
 </details>
 
@@ -70,20 +69,20 @@ kubectl describe pod run-once-and-fail | grep Status
 
 ```bash
 kubectl run should-restart-on-failure-$RANDOM \
-  --image=busybox \
+  --image bash \
   --restart=OnFailure \
-  -- sh -c "if [ "$(expr $RANDOM % 2 )" -eq "0" ] ; then exit 0; else exit 1; fi"
+  -- bash -c 'if [ "$(expr $RANDOM % 5 )" -eq "0" ] ; then exit 0; else exit 1; fi'
 
-kubectl get pods -n demo-$USER -owide --watch
+kubectl get pods -owide --watch
 ```
 
 * Finally, create a `deployment` and see how it doesn't matter how many times the pod dies it will be scheduled again
 
 ```bash
 kubectl run restart-always \
-  --image=busybox \
-  --restart=Always \
-  -- sh -c "exit 1"
+  --image bash \
+  --restart Always \
+  -- bash -c "exit 1"
 
 kubectl get pod -l run=restart-always -owide --watch
 ```
