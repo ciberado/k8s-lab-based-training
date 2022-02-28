@@ -16,25 +16,6 @@
 * Two types of selectors
 * **Equality-based**: `env=prod`, `env!=prod`
 * **Set-based**: `env in (production, preproduction)`, `env not in (development), `env`, `!env`
-* Used in templates:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: demo
-spec:
-  containers:
-    - name: demo
-      image: demo
-  nodeSelector:
-    disktype: ssd-enabled
-```
-
-* Used in queries
-
-```
-kubectl get pods --selector env=production,tier=cache
 ```
 
 ## Preparation
