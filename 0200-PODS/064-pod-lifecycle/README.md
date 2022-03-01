@@ -22,7 +22,7 @@ kubectl config set-context --namespace demo-$USER --current
 * `CrashLoopBackOff`: repeated failure of at least one container is holding back pod recreation
 * `Unknown`: something happened, smile
 
-## Shutodown sequence
+## Shutdown sequence
 
 * The `pod` is set in `Terminating` state
 * `preStop` hook execute
