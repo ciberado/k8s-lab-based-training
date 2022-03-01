@@ -59,7 +59,7 @@ echo The tunnel PID is $PID and the endpoint address is http://localhost:$PORT
 * Check the existing health endpoint
 
 ```bash
-curl localhost:$PORT/health
+curl localhost:$PORT/health; echo
 ```
 
 <details>
