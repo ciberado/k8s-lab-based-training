@@ -106,7 +106,7 @@ kubectl run run-once-and-fail \
   --image=busybox \
   --restart=Never \
   -n demo-$USER \
-  --dry-run=client \
+  --dry-run=True \
   -oyaml \
   -- sh -c "exit 1" 
 ```
