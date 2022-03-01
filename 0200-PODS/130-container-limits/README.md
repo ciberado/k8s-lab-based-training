@@ -59,7 +59,7 @@ spec:
   - name: stress-demo-container
     image: containerstack/alpine-stress
     command: ['sh', '-c', 'echo I can be stressed! && sleep 36000']
-    ▒▒▒▒▒▒▒▒▒:
+    resources:
       ▒▒▒▒▒▒:
         ▒▒▒▒▒▒: "200Mi"
       ▒▒▒▒▒▒▒▒:
