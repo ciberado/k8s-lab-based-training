@@ -45,32 +45,13 @@ EOF
 kubectl apply -f pokemon.yaml && kubectl get pods --watch
 ```
 
+* Once the behaviour is clear, delete the `pod` with
+
+```bash
+kubectl delete -f pokemon.yaml
+```
+
 ## Probes
-
-* Forward the service port to access the application:
-
-```bash
-PORT=$(( ( RANDOM % 100 )  + 8000 ))
-kubectl port-forward pokemon --address 0.0.0.0 -n demo-$USER $PORT:80 &
-PID=$!
-echo The tunnel PID is $PID and the endpoint address is http://localhost:$PORT
-```
-
-* Check the existing health endpoint
-
-```bash
-curl localhost:$PORT/health; echo
-```
-
-<details>
-<summary>
-Use `kubectl exec` against the `pokemon` pod to check if the main process (`node`) is being ran (see [pgrep](https://dashdash.io/1/pgrep)).
-</summary>
-
-```bash
-kubectl exec -it pokemon -- pgrep node
-```
-</details>
 
 <details>
 <summary>
@@ -125,6 +106,33 @@ EOF
 ```
 kubectl apply -f pokemon.yaml && kubectl get pod --watch
 ```
+
+
+* Forward the service port to access the application:
+
+```bash
+PORT=$(( ( RANDOM % 100 )  + 8000 ))
+kubectl port-forward pokemon --address 0.0.0.0 -n demo-$USER $PORT:80 &
+PID=$!
+echo The tunnel PID is $PID and the endpoint address is http://localhost:$PORT
+```
+
+* Check the existing health endpoint
+
+```bash
+curl localhost:$PORT/health; echo
+```
+
+<details>
+<summary>
+Use `kubectl exec` against the `pokemon` pod to check if the main process (`node`) is being ran (see [pgrep](https://dashdash.io/1/pgrep)).
+</summary>
+
+```bash
+kubectl exec -it pokemon -- pgrep node
+```
+</details>
+
 
 ## Unexpected fails
 
