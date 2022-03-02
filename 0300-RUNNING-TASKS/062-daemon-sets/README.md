@@ -19,53 +19,12 @@ kubectl config set-context --namespace demo-$USER --current
 
 We are going to deploy an infrastructure `DaemonSet` that will update a file on each host.
 
-<details>
-<summary>Challenge: complete the next manifest (by replacing the asterisks) so it deploy a `DaemonSet` to each of the workers
-
-
-```yaml
-cat << EOF > daemonset.yaml
-apiVersion: ***********
-kind: ***********
-metadata:
-  name: loop
-spec:
-  selector:
-    matchLabels:
-        name: looper
-  template:
-    metadata:
-      labels:
-        name: looper
-    spec:
-      volumes:
-        - name: tmphost
-          hostPath:
-            path: /tmp
-      containers:
-      - name: web
-        image: bash
-        command: ['sh', '-c', 'while true; do date >> /host-tmp/loop-$USER; sleep 5; done']
-        volumeMounts:
-          - name: tmphost
-            mountPath: /host-tmp
-EOF
-```
-
-* Apply the file, once is properly configured:
-
-```bash
-kubectl apply -f daemonset.yaml
-```
-
-</summary>
-
-### Solution
+* Create the manifest
 
 ```yaml
 cat << EOF > daemonset.yaml
 apiVersion: apps/v1
-kind: DaemonSet
+kind: ▒▒▒▒▒Set
 metadata:
   name: loop
 spec:
@@ -90,7 +49,12 @@ spec:
             mountPath: /host-tmp
 EOF
 ```
-</details>
+
+* Apply it
+
+```bash
+kubectl apply -f daemonset.yaml
+```
 
 ## Exploring the created resources
 
