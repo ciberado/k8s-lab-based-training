@@ -62,6 +62,12 @@ What does the `spec.schedule` expression means?
 kubectl apply -f cronjob.yaml
 ```
 
+* Check what resources are being created (press `ctrl+c` for stopping the watch command):
+
+```bash
+watch kubectl get all
+```
+
 * See how the name of the pod is being increased for each job, and how every now and then they are automatilly removed from the list as they expire.
 
 ```bash
