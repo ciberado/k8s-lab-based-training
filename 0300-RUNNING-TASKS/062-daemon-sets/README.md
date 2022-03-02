@@ -64,20 +64,11 @@ kubectl apply -f daemonset.yaml
 kubectl get all -owide
 ```
 
-<details>
-<summary>Challenge:  Select the first deployed pod using `-jsonpath` and put its name into a variable
+* Select the first deployed pod using `-jsonpath` and put its name into a variable
 
 ```bash
-POD=$(kubectl get pods -ojsonpath='****************')
+POD=$(kubectl get pods -ojsonpath='{.items[0].▒▒▒▒▒▒▒▒.name}')
 ```
-</summary>
-
-### Solution
-
-```bash
-POD=$(kubectl get pods -ojsonpath='{.items[0].metadata.name}')
-```
-</details>
 
 * Use that pod to see how the **nodes** have been affected by the `DaemonSet` (also, ask the trainers to `ssh` into them and show you those files directly)
 
@@ -100,7 +91,7 @@ kubectl apply -f daemonset.yaml
 ```
 
 <details>
-<summary>Challenge: find the command required to follow the deployment of the new version of the pods
+<summary>Challenge: find the command required to follow the deployment of the new version of the pods. Tip: look for the `rollout` command documentation.
 </summary>
 
 ### Solution
