@@ -15,7 +15,7 @@
 
 * Two types of selectors
 * **Equality-based**: `env=prod`, `env!=prod`
-* **Set-based**: `env in (production, preproduction)`, `env not in (development), `env`, `!env`
+* **Set-based**: `env in (production, preproduction)`, `env not in (development)`, `env`, `!env`
 
 ## Preparation
 
