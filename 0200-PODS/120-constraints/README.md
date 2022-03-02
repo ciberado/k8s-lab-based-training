@@ -94,14 +94,6 @@ kubectl delete deployment frontend
 
 In the next scenario we plan to deploy two replicas of a heavy web server only on nodes that contains a node-wide memcached-based cache in order to take advantage of the locality,presumibly by injecting the node name into the client environment and using `spec.containers.ports.hostPort` on the memcached
 
-```yaml
-env:
-- name: NODE_NAME
-  valueFrom:
-    fieldRef:
-      fieldPath: spec.nodeName 
-```
-
 * The *Memcached* database will publish its port **in the host**, so we should ensure two pods don't share the same vm
 
 ```yaml
