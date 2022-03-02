@@ -2,7 +2,7 @@
 
 `Cronjobs` are a way to execute scheduled [jobs](../063-jobs/README.md). So, by defining a `Cronjob`, you will create a `job` each *x* minutes
 
-Remember: `spec.jobtemplate..spec.completions` is the number of `completed` pods ran by each `job` to mark it as succeeded, so it should be equal or less than `spec.jobtemplate.spec.parallelism` (which is the number of pods executed on each `job`).
+Remember: `spec.jobtemplate.spec.completions` is the number of `completed` pods ran by each `job` to mark it as succeeded, so it should be equal or less than `spec.jobtemplate.spec.parallelism` (which is the number of pods executed on each `job`).
 
 Currently, there is no way to set a finish date for the resource.
 
