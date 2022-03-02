@@ -68,11 +68,7 @@ kubectl apply -f cronjob.yaml
 watch kubectl get all
 ```
 
-* See how the name of the pod is being increased for each job, and how every now and then they are automatilly removed from the list as they expire.
-
-```bash
-watch kubectl get pods --sort-by=.status.startTime 
-```
+* What will happen if you delete a particular `job` (not the `cronjob`)?
 
 ## Cleanup
 
