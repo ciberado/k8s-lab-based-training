@@ -34,6 +34,12 @@ kubectl config set-context --namespace demo-$USER --current
 kubectl get nodes --show-labels
 ```
 
+* Explore, if you want the `json` output for your cluster infrastructure
+
+```bash
+kubectl get nodes -o json | jid
+```
+
 * Retrieve the name of a worker node 
 
 ```
