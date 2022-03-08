@@ -98,7 +98,7 @@ kubectl logs config-demo
 * Access the pod and check the configuration (**don't close the session after it**)
 
 ```
-kubectl exec -it config-demo -- bash -c "env | grep POD_IP"
+kubectl exec -it config-demo -- bash -c "env | grep MY_POD_IP"
 kubectl exec -it config-demo -- bash -c "env | grep DEBUG"
 kubectl exec -it config-demo -- ls /configuration
 kubectl exec -it config-demo -- cat /configuration/motd.txt
