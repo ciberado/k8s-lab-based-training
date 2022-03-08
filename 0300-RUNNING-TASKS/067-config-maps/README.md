@@ -221,9 +221,3 @@ kill -9 $PID
 kubectl delete ns demo-$USER
 ```
 
-* Remove the created resources
-
-```bash
-kubectl delete deployments/config-demo
-kubectl delete configmaps/project-config
-```
