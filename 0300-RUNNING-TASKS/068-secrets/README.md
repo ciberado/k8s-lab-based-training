@@ -51,8 +51,8 @@ kubectl apply -f secret.yaml
 * Get the secrets from command line
 
 ```bash
-kubectl get secret project-secrets -ojsonpath='{.▒▒▒▒.▒▒▒▒▒▒▒▒}' | base64 --decode
-kubectl get secret project-secrets -ojsonpath='{.▒▒▒▒.▒▒▒▒▒▒}' | base64 --decode
+kubectl get secret project-secrets -ojsonpath='{.data.▒▒▒▒▒▒▒▒}' | base64 --decode
+kubectl get secret project-secrets -ojsonpath='{.data.▒▒▒▒▒▒}' | base64 --decode
 ```
 
 ## Secret access from applications
