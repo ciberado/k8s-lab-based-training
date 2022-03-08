@@ -171,6 +171,8 @@ kubectl delete ns demo-$USER
 
 * Remove the *CSI* driver
 
+### Do not run below commands if instructor led!
+
 ```bash
 kubectl delete -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/"
 ```
