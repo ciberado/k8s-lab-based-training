@@ -78,7 +78,7 @@ EOF
 * And deploy it
 
 ```bash
-kubectl apply -f bash.sh
+kubectl apply -f bash.yaml
 ```
 
 ## EKS pod IPs and domain IPs
