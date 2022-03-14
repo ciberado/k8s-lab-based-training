@@ -160,8 +160,3 @@ resource and apply it
 kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.7/deploy/gatekeeper.yaml
 ```
 
-* Delete the cluster
-  
-```bash
-eksctl delete cluster --name=$USER-cluster
-```
