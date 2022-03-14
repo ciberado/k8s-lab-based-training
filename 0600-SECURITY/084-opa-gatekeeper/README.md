@@ -5,14 +5,6 @@
 a resource against a set of defined rules to see if it is compliant with the requirements of the
 cluster, rejecting its creation if it is not.
 
-## Preparation
-
-* Create a small cluster (*Opa Gatekeeper* resources can't be constrained to one single namespace)
-
-```bash
-eksctl create cluster --name=$USER-cluster --nodes=1
-```
-
 ## Install OPA admission controller
 
 * Install the product
