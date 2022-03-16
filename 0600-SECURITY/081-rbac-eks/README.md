@@ -306,6 +306,13 @@ kubectl get pods -n dev-$USER
 ## Clean it up
 
 ```bash
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+
+CLUSTER_ARN=$(kubectl config view --minify -o jsonpath='{.clusters[].name}')
+CLUSTER_NAME=${CLUSTER_ARN#*/}
+CLUSTER_NAME=${CLUSTER_NAME%%.*}
+echo The name of your cluster is $CLUSTER_NAME.
+
 rm -fr ~/.kube
 eksctl utils write-kubeconfig --cluster $CLUSTER_NAME
 kubectl delete namespace dev-$USER
