@@ -278,7 +278,6 @@ aws sts get-caller-identity --profile eksDevProfile
 eksctl utils write-kubeconfig \
   --cluster $CLUSTER_NAME\
   --authenticator-role-arn arn:aws:iam::${ACCOUNT_ID}:role/AWSDeveloperRole${USER} \
-  --profile AWSUserAlice${USER} \
   --region eu-west-1
 ```
 
