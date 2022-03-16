@@ -14,7 +14,7 @@ kubectl config set-context --namespace demo-$USER --current
 ```bash
 CLUSTER_ARN=$(kubectl config view --minify -o jsonpath='{.clusters[].name}')
 CLUSTER_NAME=${CLUSTER_ARN#*/}
-CLUSTER_NAME=${CLUSTER_NAME%.*}
+CLUSTER_NAME=${CLUSTER_NAME%%.*}
 echo The name of the cluster is $CLUSTER_NAME.
 ```
 
