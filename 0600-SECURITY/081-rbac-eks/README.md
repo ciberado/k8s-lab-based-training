@@ -213,7 +213,7 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 
 CLUSTER_ARN=$(kubectl config view --minify -o jsonpath='{.clusters[].name}')
 CLUSTER_NAME=${CLUSTER_ARN#*/}
-CLUSTER_NAME=${CLUSTER_NAME%.*}
+CLUSTER_NAME=${CLUSTER_NAME%%.*}
 echo The name of your cluster is $CLUSTER_NAME.
 
 eksctl create iamidentitymapping \
