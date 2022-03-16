@@ -145,15 +145,15 @@ kill -9 $PID
 ```yaml
 cat << EOF > dev-role.yaml
 kind: Role
-apiVersion: rbac.authorization.k8s.io/▒▒▒▒▒▒▒
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: k8s-dev-role-$USER
 rules:
-  - ▒▒▒▒▒▒▒▒▒:
+  - apiGroups:
       - ""                     # pods
       - "apps"                 # deployments, services, secrets...
       - "events.k8s.io"        # events
-    ▒▒▒▒▒▒▒▒▒:
+    resources:
       - "pods"
       - "pods/attach"
       - "pods/exec"
@@ -164,7 +164,7 @@ rules:
       - "secrets"
       - "configmaps"
       - "events"
-    ▒▒▒▒▒:
+    verbs:
       - "create"
       - "delete"
       - "describe"
