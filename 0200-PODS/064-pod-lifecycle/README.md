@@ -65,18 +65,7 @@ kubectl get pod run-once-and-fail -o jsonpath="{.status.containerStatuses[].stat
 ```
 </details>
 
-* Create a `job` instead of a simple `pod` and and check how it is being resurrected until it ends with an `exit 0`
-
-```bash
-kubectl run should-restart-on-failure-$RANDOM \
-  --image bash \
-  --restart=OnFailure \
-  -- bash -c 'if [ "$(expr $RANDOM % 5 )" -eq "0" ] ; then exit 0; else exit 1; fi'
-
-kubectl get pods -owide --watch
-```
-
-* Finally, create a `deployment` and see how it doesn't matter how many times the pod dies it will be scheduled again
+* Now, create a `deployment` and see how it doesn't matter how many times the pod dies it will be scheduled again
 
 ```bash
 kubectl run restart-always \
