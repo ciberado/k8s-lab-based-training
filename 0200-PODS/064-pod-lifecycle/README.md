@@ -1,8 +1,6 @@
 # Pod lifecycle
 
 
-This laboratory uses not only `pods`, but also `jobs` and `deployments`. You don't need to fully understand them, but make sure you come back once you are familiar with that kind of resources.
-
 ## Preparation
 
 * Create the `namespace` and set it as the preferred one
@@ -18,7 +16,7 @@ kubectl config set-context --namespace demo-$USER --current
 * `Running`: at least one container is up
 * `Suceeded`: `restartPolicy` was set to `never` or `onFailure`and all the containers have finished with a 0 code
 * `Failed`: `restartPolicy` was set to `never` and at least one container existed with an error
-* `Completed`: the pod was part of a *job* and it was successfully completed
+* `Completed`: the pod was launched with `restart=Nevert` (for example, as part of a *job*) and it was successfully completed
 * `CrashLoopBackOff`: repeated failure of at least one container is holding back pod recreation
 * `Unknown`: something happened, smile
 
@@ -60,8 +58,7 @@ How can you know if the pod has been finished with a `Succeed` or a `Failed` exi
 </summary>
 
 ```bash
-kubectl describe pod run-once-and-fail | grep Status
-kubectl get pod run-once-and-fail -o jsonpath="{.status.containerStatuses[].state}" | jq
+kubectl get pod run-once-and-fail -o json | jq .status.containerStatuses[].state
 ```
 </details>
 
