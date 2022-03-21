@@ -30,8 +30,14 @@ kubectl config set-context --namespace demo-$USER --current
 
 * Show information from nodes, including the labels
 
-```
+```bash
 kubectl get nodes --show-labels
+```
+
+* Maybe we can use a level 9 invocation spell to properly format the labels:
+
+```bash
+kubectl get nodes --show-labels=true; echo ''; kubectl get nodes --show-labels=true --no-headers=true | head -n 1 | awk '{print $6}' | perl -pe 's/,/\n/g'
 ```
 
 * Explore, if you want the `json` output for your cluster infrastructure
