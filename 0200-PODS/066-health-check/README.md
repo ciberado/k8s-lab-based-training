@@ -53,10 +53,7 @@ kubectl delete -f pokemon.yaml
 
 ## Probes
 
-<details>
-<summary>
-Knowing that the application has a `/health` endpoint and it is a `node` application, add the following probes to the manifest: `spec.containers[].startupProbe`, `spec.containers[].readinessProbe` and `spec.containers[].livenessProbe`.
-</summary>
+* Knowing that the application has a `/health` endpoint and it is a `node` application, let's add the following probes to the manifest: `spec.containers[].startupProbe`, `spec.containers[].readinessProbe` and `spec.containers[].livenessProbe`.
 
 ```yaml
 cat << 'EOF' > pokemon.yaml
@@ -97,9 +94,6 @@ spec:
       terminationGracePeriodSeconds: 10  # <-- Quick kill if liveness probe is not ok
 EOF
 ```
-
-</details>
-
 
 * Check how the container is not ready until it passes the seconds specified by `spec.containers[].startupProbe` (type `ctrl+c` to exit the `--watch` command)
 
