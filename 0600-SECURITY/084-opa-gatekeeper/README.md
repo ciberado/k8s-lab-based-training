@@ -78,7 +78,7 @@ kubectl get ConstraintTemplate
 kubectl api-resources | grep K8sRequiredLabels
 ```
 
-* The resource also appears in the `gatekeepr-system` namespace, much for our confusion
+* The resource also appears in the `gatekeepr-system` namespace, as it is not a namespaced resource
 
 ```bash
 kubectl get ConstraintTemplate -n gatekeeper-system
