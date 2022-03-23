@@ -75,6 +75,7 @@ kubectl apply -f opa-template.yaml
 
 ```bash
 kubectl get ConstraintTemplate
+kubectl api-resources | grep K8sRequiredLabels
 ```
 
 * The resource also appears in the `gatekeepr-system` namespace, much for our confusion
