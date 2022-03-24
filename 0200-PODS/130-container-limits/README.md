@@ -127,11 +127,11 @@ kubectl run j2 --image=ciberado/java-docker-cgroups --limits=memory=100Mi -it --
 * In an small cluster it is possible to get information about the node utilization using bash magic
 
 ```
-kubectl get nodes --no-headers \
+TIME=10; while true; do kubectl get nodes --no-headers \
  | awk '{print $1}' \
  | xargs -I {} sh -c 'echo {}; kubectl describe node {} \
    | grep Allocated -A 5 \
-   | grep -ve Event -ve Allocated -ve percent -ve -- ; echo'
+   | grep -ve Event -ve Allocated -ve percent -ve -- ; echo'; sleep $TIME; done
 ```
 
 ## Cleanup
