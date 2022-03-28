@@ -179,7 +179,6 @@ spec:
   containers:
     - name: nginx
       image: nginx:alpine
-#      command: ['sh', '-c', 'cat /etc/nginx/nginx.conf && sleep 600']      
       volumeMounts:
         - name: nginx-config
           subPath: nginx.conf
