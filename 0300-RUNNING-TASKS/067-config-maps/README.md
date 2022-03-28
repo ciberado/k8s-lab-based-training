@@ -209,8 +209,8 @@ curl localhost:$PORT
 ```bash
 kill -9 $PID
 ```
-
-### Alternative approach
+  
+**Alternative approach**
 
 ```bash
 cat << EOF > nginx-config-map.yaml
