@@ -252,7 +252,7 @@ spec:
           subPath: nginxconfig
           mountPath: /etc/nginx/nginx.conf
 EOF
-
+```
 </details>
 
 
