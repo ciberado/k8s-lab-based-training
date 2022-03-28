@@ -209,7 +209,6 @@ curl localhost:$PORT
 ```bash
 kill -9 $PID
 ```
-</details>
 
 ### Alternative approach
 
@@ -254,6 +253,7 @@ spec:
           mountPath: /etc/nginx/nginx.conf
 EOF
 
+</details>
 
 ## Cleanup
 
