@@ -176,6 +176,10 @@ kind: Pod
 metadata:
   name: nginx-demo
 spec:
+  volumes:
+    - name: nginx-config
+      configMap:
+        name: nginx-config-map
   containers:
     - name: nginx
       image: nginx:alpine
@@ -183,10 +187,6 @@ spec:
         - name: nginx-config
           subPath: nginx.conf
           mountPath: /etc/nginx/nginx.conf
-  volumes:
-    - name: nginx-config
-      configMap:
-        name: nginx-config-map
 EOF
 ```
 
@@ -210,6 +210,49 @@ curl localhost:$PORT
 kill -9 $PID
 ```
 </details>
+
+### Alternative approach
+
+```bash
+cat << EOF > nginx-config-map.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config-map
+data:
+  wop: wip
+  nginxconfig: |
+    events {}
+    
+    http {
+      server {
+        location / {
+            proxy_pass http://www.google.com;
+        }
+      }
+    }
+EOF
+```
+
+```bash
+cat << EOF > nginx-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-demo
+spec:
+  volumes:
+    - name: nginx-config-volume
+      configMap:
+        name: nginx-config-map
+  containers:
+    - name: nginx
+      image: nginx:alpine
+      volumeMounts:
+        - name: nginx-config-volume
+          subPath: nginxconfig
+          mountPath: /etc/nginx/nginx.conf
+EOF
 
 
 ## Cleanup
