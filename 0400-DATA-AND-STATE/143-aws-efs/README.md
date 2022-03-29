@@ -163,36 +163,14 @@ kubectl exec -it pod-with-efs -- cat /test-efs/hello-$USER.txt
 
 ## Cleanup
 
-* Start by deleting the local resources
+* Delete the `pv`
+
+```bash
+kubectl delete -f efs-persistent-volume.yaml
+```
+
+* Delete the namespace
 
 ```bash
 kubectl delete ns demo-$USER
-```
-
-* Remove the *CSI* driver
-
-### Do not run below commands if instructor led!
-
-```bash
-kubectl delete -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/"
-```
-
-* Unmount the target points, delete the *EFS* disk and remove the *security group*
-
-```bash
-MOUNT_TARGET_IDS=$(aws efs describe-mount-targets \
-  --file-system-id $FILE_SYSTEM_ID \
-  --query MountTargets[].MountTargetId \
-  --output text)
-
-for target in ${MOUNT_TARGET_IDS}
-do
-    echo "Deleting mount target  " $target
-    aws efs delete-mount-target \
-      --mount-target-id $target
-done
-
-aws efs delete-file-system --file-system-id $FILE_SYSTEM_ID
-
-aws ec2 delete-security-group --group-id $MOUNT_TARGET_GROUP_ID
 ```
