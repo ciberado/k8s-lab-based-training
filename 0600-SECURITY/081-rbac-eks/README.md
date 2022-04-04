@@ -3,6 +3,8 @@
 
 ## IAM Authentication configuration
 
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As AWS administrator of the account containing the cluster
+
 ### IAM Role
 
 * Get your account ID
@@ -11,6 +13,8 @@
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 echo Your account is $ACCOUNT_ID
 ```
+
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As AWS administrator of the account in which de AWS user is going to be accreditet.
 
 * Define the role the user will assume (we prefix it with `$USER` to avoid role name conflicts, but in a real environment that would not happen):
 
@@ -29,7 +33,7 @@ aws iam create-role \
 
 ### IAM Group
 
-* Create the group
+* Create a group for users that will be able to assume the role (and list the clusters)
 
 ```bash
 aws iam create-group --group-name AWSMyProjectGroup${USER}
@@ -67,7 +71,7 @@ aws iam put-group-policy \
 --policy-document "$ASSUME_AWSDEVELOPERROLE_POLICY"
 ```
 
-* Check the group is in place
+* Check if the group is in place
 
 ```bash
 aws iam list-groups --output table
@@ -93,7 +97,7 @@ aws iam add-user-to-group --group-name AWSMyProjectGroup${USER} --user-name AWSU
 aws iam get-group --group-name AWSMyProjectGroup${USER}
 ```
 
-* Generate AK/SC credentials
+* Generate AK/SC credentials (for later sending them to the IAM user). Alternatively, let the user generate their own AK/SK
 
 ```bash
 aws iam create-access-key --user-name AWSUserAlice${USER} | tee /tmp/AWSUserAlice${USER}.json
@@ -101,8 +105,9 @@ aws iam create-access-key --user-name AWSUserAlice${USER} | tee /tmp/AWSUserAlic
 
 ## EKS Authorization Configuration
 
-We are going to provide permissions to manage `pods`, `deployments`, `services`, `secrets` and `events` in a particular `namespace`
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As the cluster administrator
 
+We are going to provide permissions to manage `pods`, `deployments`, `services`, `secrets` and `events` in a particular `namespace`
 
 * Create the ns
 
@@ -237,7 +242,7 @@ eksctl get iamidentitymapping --cluster $CLUSTER_NAME
 
 ## Configuring developer workstation
 
-Up to this point, we have been working as administrators of the cluster. Now, we exchange hats and act as the developer Alice, part of the *myproject* team.
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As a developer that wants to access to the cluster and is an AWS user
 
 Note: remember in case of messing up the configuration you can restore it with `aws eks --region eu-west-1 update-kubeconfig --name $CLUSTER_NAME`.
 
