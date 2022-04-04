@@ -28,7 +28,7 @@
 * Clone the lab repository locally.
 
 ```bash
-$ git clone git@github.com:ciberado/ntt-k8s-censored-training.git
+$ git clone https://github.com/ciberado/k8s-censored-training.git
 
 $ cd ntt-k8s-censored-training/0500-NETWORKING/076-ingress-traefik
 ```
