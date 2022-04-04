@@ -42,7 +42,7 @@ ASSUME_AWSDEVELOPERROLE_POLICY=$(echo -n '{
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "AllowAssumeOrganizationAccountRole",
+      "Sid": "AllowAssumeAWSDeveloperRole",
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": "arn:aws:iam::'; echo -n "$ACCOUNT_ID"; echo -n ":role/AWSDeveloperRole${USER}"; echo -n '"
