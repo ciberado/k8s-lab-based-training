@@ -14,8 +14,6 @@ ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 echo Your account is $ACCOUNT_ID
 ```
 
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As AWS administrator of the account in which de AWS user is going to be accreditet.
-
 * Define the role the user will assume (we prefix it with `$USER` to avoid role name conflicts, but in a real environment that would not happen):
 
 ```
@@ -30,6 +28,9 @@ aws iam create-role \
   --output text \
   --query 'Role.Arn'
 ```
+
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As AWS administrator of the account in which de AWS user is going to be accreditet.
+
 
 ### IAM Group
 
