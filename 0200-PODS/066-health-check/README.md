@@ -74,7 +74,7 @@ spec:
         port: server-port
         path: "/health"
       failureThreshold: 5
-      periodSeconds: 15         # <-- wait up to 5*10 seconds
+      periodSeconds: 15         # <-- wait up to 5*15 seconds
     readinessProbe:             # <-- send me traffic if it is ok
       httpGet:
         port: server-port
