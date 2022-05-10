@@ -16,9 +16,10 @@ kubectl config set-context --namespace demo-$USER --current
 * `Running`: at least one container is up
 * `Suceeded`: `restartPolicy` was set to `never` or `onFailure`and all the containers have finished with a 0 code
 * `Failed`: `restartPolicy` was set to `never` and at least one container existed with an error
-* `Completed`: the pod was launched with `restart=Nevert` (for example, as part of a *job*) and it was successfully completed
 * `CrashLoopBackOff`: repeated failure of at least one container is holding back pod recreation
+* `ImagePullBackOff`: repeated failire to retrieve the specified image
 * `Unknown`: something happened, smile
+* `Completed`: A job has finished, with all of its pods succeeding
 
 ## Shutdown sequence
 
