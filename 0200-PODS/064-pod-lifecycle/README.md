@@ -25,7 +25,8 @@ kubectl config set-context --namespace demo-$USER --current
 
 * The `pod` is set in `Terminating` state
 * `preStop` hook execute
-* `SIGTERM` sent to the process with pid `1`
+* `SIGTERM` sent to the process with pid `1` (use [dumb-init](https://github.com/Yelp/dumb-init) or similar)
+* Remove the `pod` IP from all `endpoints`
 * Kubernetes waits `spec.terminationGracePeriodSeconds` (30s by default)
 * `SIGKILL` sent to proces with pid `1`
 
