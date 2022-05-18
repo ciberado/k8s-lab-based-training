@@ -23,7 +23,8 @@ cat ./charts/postgres-operator/values.yaml
 * Use `helm` to install the *operator*
 
 ```bash
-helm install postgres-operator ./charts/postgres-operator
+# No need to do this, already deployed by the trainer
+# helm install postgres-operator ./charts/postgres-operator
 ```
 
 * Explore the operator `pod`
