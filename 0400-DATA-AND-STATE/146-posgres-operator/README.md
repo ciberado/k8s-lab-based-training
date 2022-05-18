@@ -53,10 +53,36 @@ kubectl port-forward $UI_POD_NAME $PORT:80 &
 echo Remember to stop the port forward command with "kill -9 $PID" once you are over.
 ```
 
+* Create a postgresql cluster
+
+```yaml
+cat << EOF > postgresql.yaml
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: acid-minimal-cluster
+spec:
+  teamId: "acid"
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    zalando:  # database owner
+    - superuser
+    - createdb
+    foo_user: []  # role for application foo
+  databases:
+    foo: zalando  # dbname: owner
+  preparedDatabases:
+    bar: {}
+  postgresql:
+    version: "14"
+EOF
+```
 * Deploy a default cluster
 
 ```bash
-kubectl apply -f manifests/minimal-postgres-manifest.yaml
+kubectl apply -f postgresql.yaml
 ```
 
 * Check the most important created resources
