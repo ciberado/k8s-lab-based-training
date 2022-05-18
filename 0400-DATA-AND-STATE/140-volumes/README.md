@@ -1,23 +1,5 @@
 # Stateful applications
 
-## Stateful applications
-
-* The Pod storage is by default **ephemeral**
-* It is possible to use **stateful** pods
-* In many cases **it may not be the best solution**
-* For slow evolving production systems on AWS **we recommend RDS**
-
-## Volumes
-
-* A `PersistentVolume` is a directory accessible to all the containers in a pod
-* Survives the restart of a container
-* Each container of the pod specifies the volume mount point
-* An `StorageClass` provides the ability to create volumes
-* To use a `PersistentVolume` we declare a `PersistentVolumeClaims`
-* `PVC` can be ReadWriteOnce, ReadOnlyMany and ReadyWriteMany 
-* AWS EBS is an example of RWO
-* Google disks is an example of ROX
-* AWS EFS is an example of RWM-
 
 ## Preparation
 
