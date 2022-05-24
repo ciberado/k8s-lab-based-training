@@ -79,7 +79,7 @@ kubectl run aws-command-with-role-$RANDOM \
   -it \
   --rm \
   --image=amazon/aws-cli:latest \
-  --service▒▒▒▒▒▒▒=aws-s3-ro-demo-sa \
+  --overrides='{ "spec": { "serviceAccount": "aws-s3-ro-demo-sa" }}' \
   --restart=Never \
   --namespace demo-$USER \
   --command \
@@ -93,7 +93,7 @@ kubectl run aws-command-with-role-$RANDOM \
   -it \
   --rm \
   --image=amazon/aws-cli:latest \
-  --service▒▒▒▒▒▒▒=aws-s3-ro-demo-sa \
+  --overrides='{ "spec": { "serviceAccount": "aws-s3-ro-demo-sa" }}' \
   --restart=Never \
   --namespace demo-$USER \
   --command \
