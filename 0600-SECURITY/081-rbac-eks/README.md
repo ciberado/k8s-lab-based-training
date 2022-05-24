@@ -7,6 +7,12 @@
 
 ### IAM Role
 
+* Set the region, in case it is necessary
+
+```bash
+export AWS_DEFAULT_REGION=eu-west-1
+```
+
 * Get your account ID
 
 ```bash
