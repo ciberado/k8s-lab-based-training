@@ -48,7 +48,8 @@ eksctl create iamservice▒▒▒▒▒▒▒ \
     --cluster $CLUSTER_NAME \
     --attach-policy-arn $S3_RO_POLICY \
     --approve \
-    --override-existing-serviceaccounts
+    --override-existing-serviceaccounts \
+    --region eu-west-1
 ```
 
 * Check everything is in place
