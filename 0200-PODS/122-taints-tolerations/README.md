@@ -23,7 +23,7 @@ echo We are going to use $SPECIAL_NODE
 * Mark it with a *taint* named `special` (this word is arbitrary, could be `potato`). Set its value to `true` and forbid any pod not having that combination from being scheduled on it thanks to the keyword `NoSchedule`. Other possible options are `NoExecute` (will evict existing pods in the node if they don't have the *toleration*) and `PreferNoSchedule`.
 
 ```
-kubectl taint nodes $SPECIAL_NODE special-$USER=true:NoSchedule
+kubectl taint nodes $SPECIAL_NODE special=true:NoSchedule
 kubectl describe node $SPECIAL_NODE | grep Taints
 ```
 
@@ -94,7 +94,7 @@ spec:
         app: demo
     spec:
       tolerations:
-      - key: "special-$USER"
+      - key: "special"
         operator: "Exists"
         effect: "NoSchedule"
       containers:
@@ -116,7 +116,7 @@ kubectl apply -f deployment.yaml
 * For creating the new `taint`
 
 ```bash
-kubectl taint nodes $SPECIAL_NODE very-special-$USER=true:NoExecute
+kubectl taint nodes $SPECIAL_NODE very-special=true:NoExecute
 ```
 
 * For watching the `pods` transitioning to another node
@@ -128,7 +128,7 @@ kubectl get pods --watch
 * Removing the `taint`
 
 ```bash
-kubectl taint nodes $SPECIAL_NODE very-special-$USER=true:NoExecute-
+kubectl taint nodes $SPECIAL_NODE very-special=true:NoExecute-
 ```
 
 
@@ -139,5 +139,5 @@ kubectl taint nodes $SPECIAL_NODE very-special-$USER=true:NoExecute-
 * Remove the taint from the node
 
 ```bash
-kubectl taint nodes $SPECIAL_NODE special-$USER=true:NoSchedule-
+kubectl taint nodes $SPECIAL_NODE special=true:NoSchedule-
 ```
