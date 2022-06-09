@@ -353,5 +353,5 @@ helm delete traefik -n traefik-$USER
 * Delete the `traefik ns`
 
 ```bash
-kubectl delete traefik-$USER
+kubectl delete ns traefik-$USER
 ```
