@@ -244,7 +244,7 @@ metadata:
     argocd.argoproj.io/secret-type: repository
 stringData:
   # Setting a public repository
-  url: git@github.com:ciberado/k8s-training-pokemon-app.git
+  url: https://github.com/ciberado/k8s-training-pokemon-app.git
   name: repo-$USER-https
   #password: my-password
   #username: my-username
@@ -328,6 +328,7 @@ spec:
   sourceRepos:
   #- '*'
   - git@github.com:ciberado/k8s-training-pokemon-app.git
+  - https://github.com/ciberado/k8s-training-pokemon-app.git
 
   # Only permit applications to deploy to the coolapplication namespace in the same cluster
   destinations:
@@ -400,7 +401,7 @@ spec:
 
   # Source of the application manifests
   source:
-    repoURL: git@github.com:ciberado/k8s-training-pokemon-app.git
+    repoURL: https://github.com/ciberado/k8s-training-pokemon-app.git
     targetRevision: my-branch-$USER
     path: ./
 
