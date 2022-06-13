@@ -4,12 +4,6 @@ You will find in the documentation how to declare apps and projects for ArgoCD u
 
 [declarative setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/)
 
-We will create the namespace, and set the context to keep that ns as the default one:
-
-```bash
-kubectl create ns demo-argocd-$USER
-kubectl config set-context --namespace demo-argocd-$USER --current
-```
 
 ## Installation ##
 
