@@ -301,35 +301,6 @@ kubectl apply -f pokemon-v2-ingressroute.yaml
 echo Open http://$ALB_HOSTNAME/v2
 ```
 
-
-
-* Define the `IngressRoute` necessary to link the `web endpoint` to the application `service`
-
-```yaml
-cat <<EOF > pokemon-ingressroute.yaml
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: pokemon-ingressroute
-spec:
-  entryPoints:
-  - web
-  routes:
-  - kind: Rule
-    match: Host(\`$ALB_HOSTNAME\`) && PathPrefix(\`/\`)
-    services:
-    - name: pokemon-service
-      port: 80
-      namespace: demo-$USER
-EOF
-```
-
-* Apply the new route
-
-```bash
-kubectl apply -f pokemon-ingressroute.yaml
-```
-
 ## Clean up
 
 * Stop the tunnel
