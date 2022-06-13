@@ -9,6 +9,10 @@ kubectl create ns demo-argocd-$USER
 kubectl config set-context --namespace demo-argocd-$USER --current
 ```
 
+## Installation ##
+
+**WARNING**: DO NOT RUN THIS SECTION. This will be done during the explation. There will only be one ArgoCD for all the students! Time to share! Go to [this other section](#Laboratory)
+
 We can install ArgoCD in our cluster with the following commands:
 
 ```bash
@@ -85,6 +89,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 Notice that `argocd-initial-admin-secret` must be deleted after you stored the password. It is only intended to be during ArgoCD installation, and once you retrieve the password, you  must delete that secret.
 
+## Laboratory ##
 So, now that we have our ArgoCD installed, and we can access the UI, let's start setting our app!
 
 First, we will need a repository. Clone the repository in your student shell:
@@ -158,12 +163,12 @@ EOF
 Commit your changes to the repository:
 
 ```bash
-git add .
+git add deployment.yaml service.yaml
 git commit -m "Create my fabulous application"
 git push origin my-branch-$USER
 ```
 
-Then, we can create our repository, choose one option, or try both:
+Then, we can create our repository. We will choose SSH option, but you can try both if you want:
 
 <details>
 <summary>
@@ -223,6 +228,7 @@ stringData:
 EOF
 
 kubectl apply -f argocd-repo-secret-ssh.yaml
+
 ```
 </details>
 
@@ -230,6 +236,8 @@ kubectl apply -f argocd-repo-secret-ssh.yaml
 <summary>
 or using HTTPS, this way you are not forced to use a user and password, therefor, can be set this way for public repositories
 </summary>
+
+**WARNING** if you try this option, make sure you modify `Application` and `AppProject` yaml manifests later. You will need to set the URL correctly for https usage, instead of the one provided for this lab.
 
 ```bash
 cat << EOF > argocd-repo-secret-https.yaml
@@ -260,7 +268,7 @@ Remember, by default, secrets are not stored encrypted, they are stored coded in
 kubectl -n argocd get secret my-private-repo-$USER -ojson | jq -r .data.sshPrivateKey | base64 --decode && echo ''
 ```
 
-So that a repo works properly, we need to add the server's keys to the ssh known hosts. Check that we have currently set ones for github.com. Github publish they're servers ssh keys [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints):
+So that a repo works properly, we need to add the server's keys to the ssh known hosts. Check that we have currently set ones for github.com. Github publishes they're servers ssh keys [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints). Verify that they are just the same ones that they provide in their web site servers:
 
 ```bash
 ssh-keyscan -t rsa github.com | ssh-keygen -lf -
@@ -270,6 +278,12 @@ Then check the configmap:
 
 ```bash
 kubectl -n argocd get configmap argocd-ssh-known-hosts-cm -oyaml
+```
+
+We will look for the rsa key in the configmap and convert it with `ssh-keygen` to verify is the same hash as the previous ones:
+
+```bash
+kubectl -n argocd get configmap argocd-ssh-known-hosts-cm -oyaml | yq .data.ssh_known_hosts | grep 'github.com ssh-rsa' | ssh-keygen -lf -
 ```
 
 <details>
@@ -407,7 +421,7 @@ spec:
 
   # Sync policy
   syncPolicy:
-    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using retry field.
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
       selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
       allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
