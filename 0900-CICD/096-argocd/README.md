@@ -1,3 +1,5 @@
+# Argo CD
+
 You will find in the documentation how to declare apps and projects for ArgoCD using yaml syntax instead of creating them with the web UI:
 
 [declarative setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/)
@@ -10,8 +12,6 @@ kubectl config set-context --namespace demo-argocd-$USER --current
 ```
 
 ## Installation ##
-
-**WARNING**: DO NOT RUN THIS SECTION. This will be done during the explation. There will only be one ArgoCD for all the students! Time to share! Go to [this other section](#Laboratory)
 
 We can install ArgoCD in our cluster with the following commands:
 
