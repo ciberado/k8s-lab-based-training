@@ -259,7 +259,7 @@ kubectl apply -f argocd-repo-secret-https.yaml
 Remember, by default, secrets are not stored encrypted, they are stored coded in base64 and you can easily decode them:
 
 ```bash
-kubectl -n argocd get secret my-private-repo-$USER -ojson | jq -r .data.sshPrivateKey | base64 --decode && echo ''
+ kubectl -n argocd get secret my-public-repo-$USER -ojson | jq -r .data.url | base64 --decode && echo '' 
 ```
 
 So that a repo works properly, we need to add the server's keys to the ssh known hosts. Check that we have currently set ones for github.com. Github publishes they're servers ssh keys [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints). Verify that they are just the same ones that they provide in their web site servers:
