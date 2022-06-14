@@ -70,7 +70,7 @@ kubectl apply -f list-pods-role.yaml
 * Define the resource for linking the `Role` with the `ServiceAccount`
 
 ```yaml
-cat << EOF > demo-sa-list-pods-rolebinding
+cat << EOF > demo-sa-list-pods-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
