@@ -232,7 +232,8 @@ eksctl create iamidentitymapping \
   --cluster $CLUSTER_NAME \
   --arn arn:aws:iam::${ACCOUNT_ID}:role/AWSDeveloperRole${USER} \
   --group k8s-myprojectgroup-$USER \
-  --username k8s-alice-user-$USER
+  --username k8s-alice-user-$USER \
+  --region eu-west-1
 ```
 
 * Check the whole `ConfigMap`:
