@@ -23,7 +23,8 @@ echo The name of the cluster is $CLUSTER_NAME.
 ```bash
 eksctl utils associate-iam-oidc-provider \
   --cluster $CLUSTER_NAME \
-  --approve
+  --approve \
+  --region eu-west-1
 ```
 
 * Get the `arn` of the desired policy
