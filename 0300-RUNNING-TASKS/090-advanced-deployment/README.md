@@ -61,7 +61,7 @@ kubectl expose deployment pokemon --type="ClusterIP" --port 80
 ```bash
 PORT=$(( ( RANDOM % 1000 )  + 8000 ))
 echo Your port is $PORT
-kubectl port-forward/service pokemon -n demo-$USER $PORT:80 --address='0.0.0.0' &
+kubectl port-forward service/pokemon -n demo-$USER $PORT:80 --address='0.0.0.0' &
 PID=$!
 ```
 
