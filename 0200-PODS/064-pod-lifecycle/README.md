@@ -64,17 +64,6 @@ kubectl get pod run-once-and-fail -o json | jq .status.containerStatuses[].state
 ```
 </details>
 
-* Now, create a `deployment` and see how it doesn't matter how many times the pod dies it will be scheduled again
-
-```bash
-kubectl run restart-always \
-  --image bash \
-  --restart Always \
-  -- bash -c "exit 1"
-
-kubectl get pod -l run=restart-always -owide --watch
-```
-
 * Remove the namespace
 
 ```bash
