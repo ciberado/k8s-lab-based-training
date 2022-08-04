@@ -79,11 +79,11 @@ How can you transform an imperative command to a declarative manifest using `--d
 </summary>
 
 ```bash
-kubectl run run-once-and-fail \
+kubectl run example-of-pod \
   --image=busybox \
   --restart=Never \
   -n demo-$USER \
-  --dry-run=True \
+  --dry-run=client \
   -oyaml \
   -- sh -c "exit 1" 
 ```
