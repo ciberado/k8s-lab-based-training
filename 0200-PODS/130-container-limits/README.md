@@ -73,10 +73,21 @@ EOF
 kubectl apply -f stress.yaml
 ```
 
-* Connect to the container and allocate 100Mi bytes for 60 seconds and 180 for another minute
+* Jump into the `pod` and try to allocate 500MB of memory. It will fail (but gracefully):
 
 ```bash
-kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 200M --vm-hang 60 -t 60 -v
+kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 500M --vm-hang 60 -t 60 -v
+```
+
+* Now do the same with 100MB (yes, it will succeed):
+
+```bash
+kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 100M --vm-hang 60 -t 60 -v
+```
+
+* Finally, let's see what happens when we are in the limit ( ;-) ;-) )
+
+```bash
 kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 120M --vm-hang 60 -t 60 -v
 ```
 
