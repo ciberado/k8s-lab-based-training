@@ -2,7 +2,7 @@
 
 * Secrets are the preferred way to expose sensible configuration to a `pod`
 * If the infra is not 100% k8s it makes sense to use a centralized external repository
-* Kubernetes `Secrets` can be easily linked to the *AWS Parameter store* and *AWS Secrets Manager* leveraging (the ASCP provider)[https://docs.aws.amazon.com/systems-manager/latest/userguide/integrating_csi_driver.html]
+* Kubernetes `Secrets` can be easily linked to the *AWS Parameter store* and *AWS Secrets Manager* leveraging [the ASCP provider](https://docs.aws.amazon.com/systems-manager/latest/userguide/integrating_csi_driver.html)
 * Create a secret (**notice base64 is NOT encrypting anything**)
 
 # Understanding base64
