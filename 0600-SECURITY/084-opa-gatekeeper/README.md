@@ -37,12 +37,12 @@ cat << 'EOF' > opa-template.yaml
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
-  name: k8srequiredlabelstemplate
+  name: requiredlabelsoparule
 spec:
   crd:
     spec:
       names:
-        kind: K8sRequiredLabels
+        kind: RequiredLabelsOPARule
       validation:
         # Schema for the `parameters` field
         openAPIV3Schema:
@@ -53,7 +53,7 @@ spec:
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
-        package k8srequiredlabels
+        package requiredlabelsoparule
 
         violation[{"msg": msg, "details": {"missing_labels": missing}}] {
           provided := {label | input.review.object.metadata.labels[label]}
@@ -75,7 +75,7 @@ kubectl apply -f opa-template.yaml
 
 ```bash
 kubectl get ConstraintTemplate
-kubectl api-resources | grep K8sRequiredLabels
+kubectl api-resources | grep RequiredLabels
 ```
 
 * The resource also appears in the `gatekeepr-system` namespace, as it is not a namespaced resource
@@ -93,9 +93,9 @@ Once the `ConstraintTemplate` is created, it can be used for examining any kind 
 ```yaml
 cat << EOF > opa-constraint.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredLabels
+kind: RequiredLabelsOPARule
 metadata:
-  name: ns-must-have-gk
+  name: opa-mandatory-ns-labels
 spec:
   match:
     kinds:
