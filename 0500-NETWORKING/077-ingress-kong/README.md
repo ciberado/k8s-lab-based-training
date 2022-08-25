@@ -147,6 +147,7 @@ kubectl apply -f hb-service.yaml
 
 ```bash
 echo Please open http://$kong/headers
+curl http://$kong/headers[1-10]
 ```
 
 ## Clean up
