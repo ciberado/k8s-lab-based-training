@@ -37,7 +37,7 @@ cat << 'EOF' > opa-template.yaml
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
-  name: k8srequiredlabels
+  name: k8srequiredlabelstemplate
 spec:
   crd:
     spec:
