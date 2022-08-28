@@ -131,12 +131,17 @@ kubectl exec -it demo -- apk add jq
 cat << 'EOF' > kctl.sh
 #!/bin/bash
 
+apk update
+apk add jq
+
 APISERVER=https://kubernetes.default.svc
 SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
 NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 echo Current namespace: $NAMESPACE
 TOKEN=$(cat ${SERVICEACCOUNT}/token)
 echo Service Account token: $TOKEN
+echo Decoded token:
+jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "$TOKEN"
 CACERT=${SERVICEACCOUNT}/ca.crt
 echo Certification Authority location: $CACERT
 PATH=${APISERVER}${1}
