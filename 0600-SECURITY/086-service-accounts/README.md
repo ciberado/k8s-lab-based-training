@@ -137,8 +137,9 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 echo Current namespace: $NAMESPACE
 TOKEN=$(cat ${SERVICEACCOUNT}/token)
 echo Service Account token: $TOKEN
-echo Decoded token:
-jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "$TOKEN"
+# How to decode the token:
+# echo Decoded token:
+# jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "$TOKEN"
 CACERT=${SERVICEACCOUNT}/ca.crt
 echo Certification Authority location: $CACERT
 PATH=${APISERVER}${1}
