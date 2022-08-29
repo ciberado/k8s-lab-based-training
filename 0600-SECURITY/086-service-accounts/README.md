@@ -131,9 +131,6 @@ kubectl exec -it demo -- apk add jq
 cat << 'EOF' > kctl.sh
 #!/bin/bash
 
-apk update
-apk add jq
-
 APISERVER=https://kubernetes.default.svc
 SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
 NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
