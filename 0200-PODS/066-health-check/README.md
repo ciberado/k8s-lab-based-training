@@ -128,7 +128,7 @@ kubectl exec -it pokemon -- pgrep node
 </details>
 
 
-## Unexpected fails
+## Unexpected failures
 
 * Set the application to *unhealthy* state 
 
