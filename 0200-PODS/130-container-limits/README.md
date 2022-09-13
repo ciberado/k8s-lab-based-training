@@ -85,38 +85,6 @@ kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 500M --vm-hang 60 -t 60
 kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 100M --vm-hang 60 -t 60 -v
 ```
 
-* Finally, let's see what happens when we are in the limit ( ;-) ;-) )
-
-```bash
-kubectl exec -it stress-demo -- stress --vm 1 --vm-bytes 120M --vm-hang 60 -t 60 -v
-```
-
-## Discussion
-
-Can you please explain the difference in the behavior of both commands?
-
-<details>
-<summary>
-Solution:
-</summary>
-
-▒▒▒ ▒▒▒▒▒ ▒▒▒ ▒▒▒▒ ▒▒ ▒▒▒▒▒▒▒▒, ▒▒ `▒▒▒▒▒▒` ▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒ ▒▒ ▒▒▒▒ ▒▒▒ ▒▒▒▒ ▒▒▒▒▒▒ ▒▒▒▒
-▒▒▒▒▒▒ ▒▒ ▒▒ ▒▒▒▒▒▒▒▒▒ (▒▒ ▒▒▒▒▒▒▒ ▒▒▒ ▒▒▒▒▒▒ ▒▒ ▒▒▒ ▒▒▒▒▒▒▒▒▒ `▒-▒▒▒▒▒`). ▒▒ ▒▒ ▒▒▒▒▒▒▒▒▒
-▒▒ ▒▒▒ ▒▒▒ ▒▒▒ ▒▒ ▒▒ ▒▒▒▒▒▒ ▒▒▒▒ ▒▒▒▒▒▒, ▒▒ ▒▒▒▒▒ ▒▒▒'▒ ▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒.
-
-</details>
-## Extra ball
-
-* In an small cluster it is possible to get information about the node utilization using bash magic
-
-```
-TIME=10; while true; do kubectl get nodes --no-headers \
- | awk '{print $1}' \
- | xargs -I {} sh -c 'echo {}; kubectl describe node {} \
-   | grep Allocated -A 5 \
-   | grep -ve Event -ve Allocated -ve percent -ve -- ; echo'; sleep $TIME; done
-```
-
 ## Cleanup
 
 * Delete all the resources
