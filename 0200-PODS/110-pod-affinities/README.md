@@ -142,7 +142,7 @@ kubectl get pods -owide --sort-by=.spec.nodeName
 
 ```bash
 HEAVY_POD=$(kubectl get pod -l app=heavy-web-server -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -it $HEAVY_POD -- bash -c 'echo stats | nc $NODE_NAME 8888'
+kubectl exec -it $HEAVY_POD -- bash -c 'echo stats | nc-v $NODE_NAME 8888'
  ```
 
 ## Cleanup
