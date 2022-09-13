@@ -128,13 +128,30 @@ EOF
 kubectl apply -f limit-range.yaml -n demo-$USER
 ```
 
-* Run a pod, trying to make it bigger than allowed
+* Define a pod, trying to make it bigger than allowed
 
 ```bash
-kubectl run web \
-  -n demo-$USER \
-  --image ciberado/pokemon:0.0.1 \
-  --▒▒▒▒▒▒ cpu=1000m,memory=512Mi
+cat << EOF > pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  name: bashpod
+spec:
+  containers:
+    - name: main
+      image: bash
+      resources:
+        limits:
+          memory: 512Mi
+          cpu: 1000m
+EOF
+```
+
+* Apply it and see how it fails:
+
+```bash
+kubectl apply -f pod.yaml
 ```
 
 ## Challenge
