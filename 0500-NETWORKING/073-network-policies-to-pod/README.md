@@ -179,7 +179,7 @@ kubectl run another-bash --rm -ti --image bash \
 * Uninstall the release with calico
 
 ```bash
-helm uninstall calico
+helm uninstall calico -n default
 ```
 
 * Delete the created resources
