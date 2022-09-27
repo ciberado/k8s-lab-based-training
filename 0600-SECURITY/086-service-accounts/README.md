@@ -23,6 +23,53 @@ kubectl get --raw /api/v1/pods | jq
 kubectl get --raw /api/v1/pods | jq .items[].metadata.name
 ```
 
+## Pods identities
+
+* Create a pod to explore its security identity
+
+```bash
+kubectl run --image bash mybash -- bash -c 'sleep 10000'
+```
+
+* Add some utilities
+
+```bash
+kubectl exec mybash -- apk add curl jq
+```
+
+* Check the content of the `serviceaccount` directory
+
+```bash
+kubectl exec mybash -- ls /var/run/secrets/kubernetes.io/serviceaccount ; echo
+```
+
+* Show the `serviceaccount` token encoded as `base64`
+
+```bash
+kubectl exec mybash -- cat /var/run/secrets/kubernetes.io/serviceaccount/token ; echo
+```
+
+* Show the token in plain text, and look for the `serviceaccount` property details
+
+```bash
+kubectl exec mybash -- \
+  cat /var/run/secrets/kubernetes.io/serviceaccount/token | jq -R 'split(".") | .[1] | @base64d | fromjson'
+```
+
+* Try to connect to the `kubernetes service` to list the pods in the default namespace (it will fail, as we
+don't have permission)
+
+```bash
+kubectl exec mybash -- \
+  curl --insecure -s -X GET https://kubernetes.default.svc/api/v1/namespaces/default/pods | jq
+```
+
+* Delete the `pod`
+
+```bash
+kubectl delete pod mybash
+```
+
 ## Service Account
 
 * Define the `ServiceAccount` resource
@@ -137,9 +184,6 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 echo Current namespace: $NAMESPACE
 TOKEN=$(cat ${SERVICEACCOUNT}/token)
 echo Service Account token: $TOKEN
-# How to decode the token:
-# echo Decoded token:
-# jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "$TOKEN"
 CACERT=${SERVICEACCOUNT}/ca.crt
 echo Certification Authority location: $CACERT
 PATH=${APISERVER}${1}
