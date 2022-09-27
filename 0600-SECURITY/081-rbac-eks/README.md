@@ -140,18 +140,6 @@ POST /apis/apps/v1/namespaces/{namespace}/deployments
 GET /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} 
 ```
 
-* Use the `kubectl` command to understand the API endpoints
-
-```bash
-kubectl proxy &
-PID=$!
-kubectl get pods -n kube-system -v6
-curl -s -X GET localhost:8001/api/v1/namespaces/kube-system/pods | more
-curl -s -X GET localhost:8001/api/v1/namespaces/kube-system/pods | jq .items[].metadata.name
-curl -s -X GET http://localhost:8001/apis/apps/v1/namespaces/kube-system/deployments | jq .items[].metadata.name
-kill -9 $PID
-```
-
 * Define the `Role` with the list of permissions associated to the user that we will create later
 
 ```yaml
