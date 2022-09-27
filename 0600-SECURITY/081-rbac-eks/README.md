@@ -5,7 +5,7 @@
 
 ## IAM Authentication configuration
 
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As AWS administrator of the account containing the cluster
+As AWS administrator of the account containing the cluster
 
 ### IAM Role
 
@@ -37,7 +37,7 @@ aws iam create-role \
   --query 'Role.Arn'
 ```
 
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As AWS administrator of the account in which de AWS user is going to be accreditet.
+As AWS administrator of the account in which de AWS user is going to be accreditet.
 
 
 ### IAM Group
@@ -114,7 +114,7 @@ aws iam create-access-key --user-name AWSUserAlice${USER} | tee /tmp/AWSUserAlic
 
 ## EKS Authorization Configuration
 
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As the cluster administrator
+As the cluster administrator
 
 We are going to provide permissions to manage `pods`, `deployments`, `services`, `secrets` and `events` in a particular `namespace`
 
@@ -240,7 +240,7 @@ eksctl get iamidentitymapping --cluster $CLUSTER_NAME
 
 ## Configuring developer workstation
 
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) As a developer that wants to access to the cluster and is an AWS user
+As a developer that wants to access to the cluster and is an AWS user
 
 Note: remember in case of messing up the configuration you can restore it with `aws eks --region eu-west-1 update-kubeconfig --name $CLUSTER_NAME`.
 
