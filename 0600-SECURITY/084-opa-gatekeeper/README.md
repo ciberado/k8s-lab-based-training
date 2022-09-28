@@ -1,5 +1,6 @@
 # OPA Gatekeeper
 
+![OPA gatekeeper diagram](opa-gatekeeper.jpg)
 
 [OPA Gatekeeper](https://github.com/open-policy-agent/gatekeeper) implements and [Admission Controller](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) that checks the **specification** of
 a resource against a set of defined rules to see if it is compliant with the requirements of the
