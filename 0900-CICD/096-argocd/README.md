@@ -171,7 +171,7 @@ Using SSH, then forced to use an SSH key to login.
 The following public key is already set in your repository, so that we can set an SSH connection to it:
 
 ```text
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeu8okdDA4B+Mx8GvZ76rYab6s3M8KM29kymbei+oHtjSfVBaxHyME8YwN+KtnwB5lHFTWUXfETIZ47evjay5ALNx817ukdqrNSAldMyzYf+SJ+/F7bcp9AWf4P98qqHLTD7Bjrud1Pkt/ikzkpDGoeFreCG+hmpjXqHX1LsERYnH4aTdFqZiCOBf4h4POC1R+fPyVT/9HV0tMHz8Iu0/eJeB69DpjkZivVZ4BjLIpBq7HkXJf8jQo5A3d4BhbXvLlwhaI4IsPT0Uxpjdm9v8OJ7wmRwnciDpQelFsCEunNpxGteOb3DOPi3kGnd5pGseSrUv6KzPAaMB6p2omhJO9 capside@GAMUSINO
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILSQKjlBSgf7lL/D7iHSgf0+fgVvjwqJFeKQFXrZ3C7f training@ntt.com
 ```
 
 Then create the secret to set up the repository, using the private key of the previous public key:
@@ -192,33 +192,13 @@ stringData:
   insecure: "true"
   type: git
   sshPrivateKey: |
-    -----BEGIN RSA PRIVATE KEY-----
-    MIIEowIBAAKCAQEAnrvKJHQwOAfjMfBr2e+q2Gm+rNzPCjNvZMpm3ovqB7Y0n1QW
-    sR8jBPGMDfirZ8AeZRxU1lF3xEyGeO3r42suQCzcfNe7pHaqzUgJXTMs2H/kifvx
-    e23KfQFn+D/fKqhy0w+wY67ndT5Lf4pM5KQxqHha3ghvoZqY16h19S7BEWJx+Gk3
-    RamYgjgX+IeDzgtUfnz8lU//R1dLTB8/CLtP3iXgevQ6Y5GYr1WeAYyyKQaux5Fy
-    X/I0KOQN3eAYW17y5cIWiOCLD09FMaY3Zvb/Die8JkcJ3Ig6UHpRbAhLpzacRrXj
-    m9wzj4t5Bp3eaRrHkq1L+iszwGjAeqdqJoSTvQIDAQABAoIBAAtBV5EEKBMhBAwb
-    dxpJ8zxLKzkIoymfAgwMigTHuP14/vw5My61/X6xPfQTqNu/dKhIvP9BYZOqtXJH
-    tI04oVvtkmjLx0NfIrdRn1Bbe5eSYfsiwTm2TEBW5C9nIATfUt0CZMh8s27Nzv6p
-    KNChj9/ZQOAziu7TjnjkOhD7krcPvlcVWEPuym0esLUuTqyOQsro839wFLu+Do25
-    MmsnHhD8FQhztYOy+zKmtXm8Or2TYCbeEVh9CKTttW8ojThxQGUiPpqu/yq1oX5x
-    wzkei7JcgTPJcubuS7wkkIsVz7O1TlssyXOoVdPKccpLljA/l9fY6vNy2Q+FUSc+
-    gGYHB4ECgYEA0Z2CkptwCeQZbTT1UYvBnN7Bu7SjElau2v2uBTlVY9vUbhZJDxer
-    hctVCZNBP7f/z0Sjwqf5Z1wpPAmgUTrCvWkY2QgUnR9YHGGMjloZhwmgc4DLlR0L
-    QwtYWivgYIyE6t5A3sBwQhfLjJWVciEgOpKqN9uAXUCz/mMb+tWzCeECgYEAwdvh
-    4uaLZmhKhxK7y/c0bwG/28RwGPdV1/EGSicEBCHuZTKNM9AV87r3Q0KD1Q/l471r
-    1ERtv04PXJs7g90Zi8ppdhVzFCFkR7a+ueoBnhbqzJG5ctqi4sCudfmtWzzLQDpl
-    AjA3QEsq4AF0z+RHc03dy1OehmDyCRI4UyLLnV0CgYB4iTCqiYOVzHrql4dyCwGc
-    6WNSQv967inCeBn3mw6FS8YOP/ZnHV9eopwV032z3GTXlUruBpWeYBq+EXMFAts0
-    /BhzxPfFml6ag2XF/f2r71c61Bc9eeQd+4ok4BI4stVEEeYPsW1cND6yatnzNSVJ
-    SUlksW5RMYHPiMJwLS61QQKBgGa7SWde2Ty5w9T0voSGSkkRWkTyQp1YZSt8VOLy
-    7hPqj1UdhuqQOTHiQKpqE0bTl/YqKXxhju80RLvEn7Nvddw4tc6X61Ydo/DFDSmk
-    spq+dktWZjpRVsRna4yldZLGEsfEqkaQmpb9voja/LY2uQ6HkyPu+jEoKttXxnV4
-    GQMZAoGBAKJ+6CSzsl2Opvyxx+sJ9fytv+0yemG66Ra2iec3+YUkSP2dhuEFBnCU
-    y8GmMlyxUbmGeV4ZWnBo1QSPp1d1bxdMRWrGPDeBK0/kbf96BQqUjvtxq1sO+Vkh
-    O1WxIAmqyb6wJtxG2KZammTrzkyW8kq13n/HKWXZ5FGTZFIx47ca
-    -----END RSA PRIVATE KEY-----
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+    QyNTUxOQAAACC0kCo5QUoH+5S/w+4h0oH9Pn4Fb48KiRXikBV62dwu3wAAAJhv/4+eb/+P
+    ngAAAAtzc2gtZWQyNTUxOQAAACC0kCo5QUoH+5S/w+4h0oH9Pn4Fb48KiRXikBV62dwu3w
+    AAAECFjcyNtymBOt5rIFqePhXwVYJGa8/xHfDucGpL9fehmrSQKjlBSgf7lL/D7iHSgf0+
+    fgVvjwqJFeKQFXrZ3C7fAAAAEHRyYWluaW5nQG50dC5jb20BAgMEBQ==
+    -----END OPENSSH PRIVATE KEY-----
 EOF
 
 kubectl apply -f argocd-repo-secret-ssh.yaml
