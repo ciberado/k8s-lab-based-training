@@ -12,7 +12,7 @@
 * Provides a query language to search metrics named *Promql*
 * [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) provides an easy way to deploy those components, plus *Grafana*
 
-![Prometheus Architecture](https://github.com/prometheus-operator/prometheus-operator/raw/main/Documentation/user-guides/images/architecture.png)
+![Prometheus Architecture](prometheus.jpg)
 
 
 ## Ingestion architecture
