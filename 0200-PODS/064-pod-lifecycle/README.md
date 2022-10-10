@@ -1,5 +1,6 @@
 # Pod lifecycle
 
+![Diagram](pod-lifecycle.png)
 
 ## Preparation
 
