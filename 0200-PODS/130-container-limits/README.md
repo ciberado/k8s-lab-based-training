@@ -1,6 +1,6 @@
 # Limits and monitoring
 
-![Diagram](requests-and-limits.png]
+![Diagram](requests-and-limits.png)
 
 ## Resource limits explanation
 
