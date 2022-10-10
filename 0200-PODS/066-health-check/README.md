@@ -1,5 +1,6 @@
 # Health checks
 
+![Diagram](health-checks.png)
 
 ## Preparation
 
