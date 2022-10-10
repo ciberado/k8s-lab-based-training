@@ -1,5 +1,7 @@
 # Limits and monitoring
 
+![Diagram](requests-and-limits.png]
+
 ## Resource limits explanation
 
 * Both memory and cpu usage can be limited
