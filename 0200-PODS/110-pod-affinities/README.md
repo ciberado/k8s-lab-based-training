@@ -1,5 +1,7 @@
 # Interpod affinity
 
+![Diagram](affinities.png)
+
 ## Labels
 
 * **Key/Value** pairs
