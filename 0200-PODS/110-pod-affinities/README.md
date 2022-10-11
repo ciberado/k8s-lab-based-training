@@ -110,15 +110,6 @@ spec:
                 values:
                 - node-cache
             topologyKey: "kubernetes.io/hostname"
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - heavy-web-server
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: web-app
         image: bash
