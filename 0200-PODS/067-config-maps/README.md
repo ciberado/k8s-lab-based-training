@@ -59,14 +59,14 @@ kind: Pod
 metadata:
   name: config-demo
 spec:
+  volumes:
+  - name: configuration
+    configMap:
+      name: project-config
   containers:
   - name: config-demo-container
     image: bash
-    env:
-      - name: MY_POD_IP
-        valueFrom:
-          fieldRef:
-            fieldPath: status.podIP        
+    env:     
       - name: DEBUG_ASSERTS
         valueFrom:
           configMapKeyRef:
@@ -76,10 +76,6 @@ spec:
     volumeMounts:
     - name: configuration
       mountPath: "/configuration"
-  volumes:
-  - name: configuration
-    configMap:
-      name: project-config
 EOF
 ```
 
@@ -166,7 +162,7 @@ EOF
 ```
 
 ```bash
-kubectl create configmap nginx-config-map --f▒▒▒-▒▒▒▒=nginx.conf 
+kubectl create configmap nginx-config-map --from-▒▒▒▒=nginx.conf 
 ```
 
 ```yaml
@@ -208,50 +204,6 @@ curl localhost:$PORT
 
 ```bash
 kill -9 $PID
-```
-  
-**Alternative approach**
-
-```bash
-cat << EOF > nginx-config-map.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-config-map
-data:
-  wop: wip
-  nginxconfig: |
-    events {}
-    
-    http {
-      server {
-        location / {
-            proxy_pass http://www.google.com;
-        }
-      }
-    }
-EOF
-```
-
-```bash
-cat << EOF > nginx-pod.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx-demo
-spec:
-  volumes:
-    - name: nginx-config-volume
-      configMap:
-        name: nginx-config-map
-  containers:
-    - name: nginx
-      image: nginx:alpine
-      volumeMounts:
-        - name: nginx-config-volume
-          subPath: nginxconfig
-          mountPath: /etc/nginx/nginx.conf
-EOF
 ```
 </details>
 
