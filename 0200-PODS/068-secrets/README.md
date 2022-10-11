@@ -66,6 +66,14 @@ kind: Pod
 metadata:
   name: pod-with-secret
 spec:
+  volumes:
+  - name: configuration
+    secret:
+      secretName: project-secrets
+      items:
+      - key: password
+        path: db/password
+        mode: 511
   containers:
   - name: main
     image: bash
@@ -79,14 +87,6 @@ spec:
     volumeMounts:
     - name: configuration
       mountPath: "/configuration"
-  volumes:
-  - name: configuration
-    secret:
-      secretName: project-secrets
-      items:
-      - key: password
-        path: db/password
-        mode: 511
 EOF
 ```
 
