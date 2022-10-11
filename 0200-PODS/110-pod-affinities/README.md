@@ -1,6 +1,8 @@
 # Interpod affinity
 
-![Diagram](affinities.png)
+![Diagram about affinities](affinities.png)
+
+![Diagram about topologies](node_selectors.png)
 
 ## Labels
 
