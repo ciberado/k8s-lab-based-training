@@ -1,5 +1,7 @@
 # External configuration
 
+![Diagram](config-maps.png)
+
 ## ConfigMaps
 
 * Are key/value pairs
