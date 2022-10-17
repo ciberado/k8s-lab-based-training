@@ -41,6 +41,12 @@ kubectl describe sc efs-sc
 kubectl api-resources | awk 'NR == 1 || /(sc )|(pv )|(pvc )/'
 ```
 
+* Define your `efs` id
+
+```bash
+FILE_SYSTEM_ID=<ASK YOUR TRAINER FOR THIS ID>
+```
+
 * Create the manifest for defining the `PersistentVolume`
   
 ```yaml
