@@ -85,14 +85,9 @@ kubectl apply -f bash.yaml
 
 ## EKS pod IPs and domain IPs
 
-* Take note of the ClusterIP assigned to the bash `pod`
+* Take note of the ClusterIP assigned to the server `pod`
 
 ```bash
-BASH_POD_IP=$(kubectl get pods -n demo-$USER -l app=bash-app  -ojsonpath={.items[*].status.podIP})
-echo $BASH_POD_IP
-BASH_POD_DNS_NAME=${BASH_POD_IP//./-}
-echo $BASH_POD_DNS_NAME
-
 NGINX_POD_IP=$(kubectl get pods -n demo-$USER -l app=nginx-app  -ojsonpath={.items[*].status.podIP})
 echo $NGINX_POD_IP
 NGINX_POD_DNS_NAME=${NGINX_POD_IP//./-}
