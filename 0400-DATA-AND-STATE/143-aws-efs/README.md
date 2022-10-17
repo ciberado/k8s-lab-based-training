@@ -2,6 +2,8 @@
 
 This lab is based on the excellent [Deploying Stateful Microservices](https://www.eksworkshop.com/beginner/190_efs/) one.
 
+![Diagram](persistent-volumes.png)
+
 ## Preparation
 
 * Create the `namespace` and set it as the preferred one
