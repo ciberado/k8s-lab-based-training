@@ -1,5 +1,7 @@
 # Service discovery
 
+![Diagram](service-discovery.png)
+
 ## Services
 
 * May manage **several replicas of the pods**
