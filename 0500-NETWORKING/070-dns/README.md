@@ -131,21 +131,6 @@ kubectl exec -it bash -- getent hosts nginx-service
 kubectl exec -it bash -- getent hosts nginx-service.demo-$USER.svc.cluster.local
 ```
 
-* Even if there is no DNS server up and running in the cluster, it is possible to find the IP of any `service` because they are all listed as environment variables (yes, yes, we know)
-
-```bash
-kubectl exec -it bash -- env | grep SERVICE
-```
-
-* As you can see, only the `service` existing at the time the `pod` was create appears. But if you force the recreation of the pod, the `nginx` `service` will be added to the environment variables when the container is created
-
-```bash
-kubectl delete -f bash.yaml
-kubectl apply -f bash.yaml
-sleep 10
-kubectl exec -it bash -- env | grep SERVICE
-```
-
 * See how, by default, there is nothing preventing you from directly reach a `pod` from another one, although as both their DNS name and IPs should be considered ephemeral (in contraposition to `service` IP and DNS name)
 
 ```bash
@@ -160,3 +145,10 @@ kubectl exec -it bash -- wget -O- -q $NGINX_POD_DNS_NAME.demo-$USER.pod.cluster.
 kubectl delete ns demo-$USER
 ```
 
+## Appendix
+
+* Even if there is no DNS server up and running in the cluster, it is possible to find the IP of any `service` because they are all listed as environment variables (yes, yes, we know)
+
+```bash
+kubectl exec -it bash -- env | grep SERVICE
+```
