@@ -41,7 +41,7 @@ kubectl apply -f service.yaml
 ```yaml
 cat << EOF > statefulset.yaml
 apiVersion: apps/v1
-kind: Stateful▒▒▒
+kind: StatefulSet
 metadata:
   name: bash-statefulset
   labels:
@@ -52,6 +52,14 @@ spec:
       app: bash-statefulset
   serviceName: "bash-service" 
   replicas: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: datavolume
+    spec:
+      accessMo▒▒▒: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
   template:
     metadata:
       labels:
@@ -64,14 +72,6 @@ spec:
         volumeMo▒▒▒s:
         - name: datavolume
           mountPath: /datavolume
-  volumeClaimTemplates:
-  - metadata:
-      name: datavolume
-    spec:
-      accessMo▒▒▒: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
 EOF
 ```
 
@@ -89,7 +89,7 @@ kubectl get pv
 kubectl get pvc
 ```
 
-* See the identifiers of the AWS volumes associated to the `statefulset`
+* See the identifiers of the AWS EBS volumes associated to the `statefulset`
 
 ```bash
 aws ec2 describe-volumes \
@@ -110,7 +110,7 @@ kubectl exec bash-statefulset-0 -- bash -c 'echo "Wop" > /datavolume/wop.txt'
 kubectl exec  bash-statefulset-0 -- cat /datavolume/wop.txt
 ```
 
-* Take note of the original pod IP
+* Take note of the original pod IP, so you can check how it changes when the pod is replaced with a new one
 
 ```bash
 ORIGINAL_IP=$(kubectl get pod -o jsonpath="{.items[0].stat▒▒.podIP}")
@@ -130,13 +130,13 @@ NEW_IP=$(kubectl get pod -o jsonpath="{.items[0].stat▒▒.podIP}")
 echo the original IP was $ORIGINAL_IP, but the new one is $NEW_IP.
 ```
 
-* See if the previously created file is still accessible from the `pod`
+* Although te pod is a new replica, you can see how the previously created file is still accessible from it
 
 ```bash
 kubectl exec bash-statefulset-0 -- cat /datavolume/wop.txt
 ```
 
-* Add a new replica to the `statefulset`
+* Add a new replica to the `statefulset` (it will create a new volume)
 
 ```bash
 kubectl scale statefulset bash-statefulset --replicas=2
@@ -149,7 +149,7 @@ kubectl get all
 kubectl get pv,pvc
 ```
 
-* Modify the disk of the second `pod` and reduce the number of replicas
+* Modify the disk of the second replica and then delete that replica
 
 ```bash
 kubectl exec bash-statefulset-1 -- bash -c 'echo "Wip" > /datavolume/wip.txt'
@@ -157,7 +157,7 @@ kubectl exec bash-statefulset-1 -- cat /datavolume/wip.txt
 kubectl scale statefulset bash-statefulset --replicas=1
 ```
 
-* See how (by design) the `persitentvolumes` remain at place, but the second `pod` is gone
+* See how (by design) the `persitentvolumes` remain at place, even if the second `pod` is gone
 
 ```bash
 kubectl get pv,pvc
