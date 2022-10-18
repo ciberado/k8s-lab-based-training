@@ -1,6 +1,6 @@
 # StatefulSets
 
-A `statefulset` provides a way to create several `pods` with predictable identities, and an easy way to attach each of them to a particular `persistentVolume`. Also, their creation and deletion follows a [LIFO](https://en.wikipedia.org/wiki/Stack_(abstract_data_type) strategy. Those characteristics makes them suitable for implementing high available databases.
+A `statefulset` provides a way to create several `pods` with predictable identities, and an easy way to attach each of them to a particular `persistentVolume`. Also, their creation and deletion follows a [LIFO](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)) strategy. Those characteristics makes them suitable for implementing high available databases.
 
 To orchestrate the identity of those `pods`, each `statefulset` requires a [headless service](https://kubernetes.io/docs/concepts/services-networking/service/)
 
