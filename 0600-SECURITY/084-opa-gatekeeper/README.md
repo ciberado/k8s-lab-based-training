@@ -156,3 +156,10 @@ kubectl apply -f secondary-ns.yaml
 kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.7/deploy/gatekeeper.yaml
 ```
 
+##  Troubleshooting
+
+* If OPA Gatekeeper is blocking all operations on the cluster, it can be disabled with the following command (see [this document](https://docs.containerplatform.hpe.com/54/reference/kubernetes/kubernetes-administrator/clusters/Troubleshooting_OPA_Gatekeeper.html) for further explanations)
+
+```bash
+kubectl delete validatingwebhookconfigurations.admissionregistration.k8s.io gatekeeper-validating-webhook-configuration
+```
