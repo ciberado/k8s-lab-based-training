@@ -38,20 +38,6 @@ echo The name of the operator pod is $POD_NAME.
 kubectl logs $POD_NAME
 ```
 
-* Optionally install the user interface web app
-
-```bash
-helm install postgres-operator-ui ./charts/postgres-operator-ui
-UI_POD_NAME=$(kubectl get pod -l app.kubernetes.io/name=postgres-operator-ui -ojsonpath="{.items[0].metadata.name}")
-echo The name of the UI pod is $UI_POD_NAME.
-PORT=$(( ( RANDOM % 1000 )  + 8000 ))
-PID=$!
-echo The port for the user interface will be $PORT.
-
-kubectl port-forward $UI_POD_NAME $PORT:80 &
-echo Remember to stop the port forward command with "kill -9 $PID" once you are over.
-```
-
 * Create a postgresql cluster
 
 ```yaml
