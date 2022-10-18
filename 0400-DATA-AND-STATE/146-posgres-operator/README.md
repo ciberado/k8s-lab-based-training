@@ -149,10 +149,10 @@ psql -U postgres -h localhost -p $PORT  -c 'select 1+1'
 
 ```bash
 curl https://pastebin.com/raw/98DaLWwG > pokemon.sql
-psql -U postgres -h localhost  -c 'create database pokemondb;'
-psql -U postgres -h localhost -d pokemondb < pokemon.sql 
+psql -U postgres -h localhost -p $PORT -c 'create database pokemondb;'
+psql -U postgres -h localhost -p $PORT -d pokemondb < pokemon.sql 
 
-psql -U postgres -h localhost -d pokemondb -c "Select * from pokemon where identifier='pikachu'"
+psql -U postgres -h localhost -p $PORT -d pokemondb -c "Select * from pokemon where identifier='pikachu'"
 ```
 </details>
 
