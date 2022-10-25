@@ -95,7 +95,7 @@ git config --global user.name "$USER"
 
 # Add ssh credentials to access repository
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/private
+ssh-add ~/training.pem
 
 # clone repository
 git clone git@github.com:ciberado/k8s-training-pokemon-app.git
