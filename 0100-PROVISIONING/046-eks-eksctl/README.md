@@ -25,49 +25,52 @@ sudo snap install yq
 * Write the cluster definition
 
 ``` yaml
-cat << EOF > cluster.yaml
+cat << 'EOF' > cluster.yaml
+
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: $USER-cluster
+  name: training
   region: eu-west-1
-  tags: {
-    Creator : $USER
-  }
-nodeGroups:
-  - name: ng-unmanaged-mixed
-    minSize: 1
-    desiredCapacity: 4
-    maxSize: 8
-    instancesDistribution:
-      instanceTypes: ["c3.large","c4.large","c5.large","c5d.large","c5n.large","c5a.large"]
-      onDemandBaseCapacity: 0
-      onDemandPercentageAboveBaseCapacity: 25
-      spotAllocationStrategy: "capacity-optimized"
+  version: '1.22'
+  tags:
+    karpenter.sh/discovery: training
+iam:
+  withOIDC: true
+
+iamIdentityMappings:
+  - arn: arn:aws:iam::xxxxxxxxx:role/xxxxxxxxxxxxxxx
+    groups:
+      - system:masters
+    username: admin
+    noDuplicateARNs: true
 
 managedNodeGroups:
-  - name: ng-extra-capacity
-    instanceTypes: ["c3.large","c4.large","c5.large","c5d.large","c5n.large","c5a.large"]
-    spot: true
-    minSize: 1
-    desiredCapacity: 1
-    maxSize: 4
-    privateNetworking: true
-    tags:
-      Owner: $USER
-  - name: ng-base-capacity
-    instanceType: c5a.large
-    minSize: 1
-    desiredCapacity: 1
-    maxSize: 8
+  - name: main-ng
+    instanceType: m5.large
+    desiredCapacity: 2
+    minSize: 0
+    maxSize: 10
+    labels:
+      creator: "jmoreno"    
+    iam:
+      withAddonPolicies:
+        ebs: true
+        fsx: true
+        efs: true
+cloudWatch:
+    clusterLogging:
+        enableTypes: ["all"]
+        logRetentionInDays: 30
+
 EOF
 ```
 
 * Apply the configuration
 
 ```bash
-time eksctl apply -f cluster.yaml
+time eksctl create -f cluster.yaml
 ```
 
 ## Use the cluster
@@ -77,13 +80,6 @@ time eksctl apply -f cluster.yaml
 ```bash
 aws cloudformation describe-stacks | jq -r .Stacks[].StackName | grep $USER
 eksctl get clusters
-```
-
-* Find the name of the attached role
-
-```bash
-INSTANCE_PROFILE_NAME=$(aws iam list-instance-profiles | jq -r '.InstanceProfiles[].InstanceProfileName' | grep ${USER})
-echo $(aws iam get-instance-profile --instance-profile-name $INSTANCE_PROFILE_NAME | jq -r '.InstanceProfile.Roles[] | .RoleName')
 ```
 
 * Check the cluster and the nodes (Note the lack of visibility over the masters):
@@ -108,23 +104,10 @@ aws eks --region eu-west-1 update-kubeconfig --name $CLUSTER_NAME
 kubectl config set-context --namespace demo-$USER --current
 ```
 
-## Challenge
-
-<details>
-<summary>
-Find a way to show all nodes, reporting about their node group and spot nature. Tips: you can use `kubectl describe`
-to easily analyze information about them, and `kubectl get nodes` with selectors to show the relevant data.
-</summary>
-
-```
-kubectl get nodes -Lnode-lifecycle,alpha.eksctl.io/nodegroup-name | awk 'NR == 1; NR > 1 {print $0 | "sort -n -r -k4"}'
-```
-</details>
-
 ## Clean up
 
 * Delete the cluster
 
 ```bash
-eksctl delete cluster --name ${USER}-cluster
+eksctl delete cluster --name training
 ```
