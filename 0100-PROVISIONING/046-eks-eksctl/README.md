@@ -25,7 +25,7 @@ sudo snap install yq
 * Write the cluster definition
 
 ``` yaml
-cat << 'EOF' > cluster.yaml
+cat << EOF > cluster.yaml
 
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
@@ -53,12 +53,13 @@ managedNodeGroups:
     minSize: 0
     maxSize: 10
     labels:
-      creator: "jmoreno"    
+      creator: "$USER"    
     iam:
       withAddonPolicies:
         ebs: true
         fsx: true
         efs: true
+
 cloudWatch:
     clusterLogging:
         enableTypes: ["all"]
