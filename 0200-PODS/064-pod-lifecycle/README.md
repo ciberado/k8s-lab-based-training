@@ -55,16 +55,6 @@ kubectl get pod run-once-and-fail -owide
 kubectl describe pod run-once-and-fail
 ```
 
-<details>
-<summary>
-How can you know if the pod has been finished with a `Succeed` or a `Failed` exit?
-</summary>
-
-```bash
-kubectl get pod run-once-and-fail -o json | jq .status.containerStatuses[].state
-```
-</details>
-
 * Remove the namespace
 
 ```bash
