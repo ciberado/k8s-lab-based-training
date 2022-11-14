@@ -195,7 +195,7 @@ kubectl logs nginx-demo
 ```bash
 PORT=$(( ( RANDOM % 1000 )  + 8000 ))
 echo $PORT
-kubectl p▒▒▒-f▒▒▒▒▒▒ nginx-demo -n demo-$USER $PORT:80 --address='0.0.0.0' &
+kubectl port-forward nginx-demo -n demo-$USER $PORT:80 --address='0.0.0.0' &
 PID=$!
 ```
 
