@@ -163,7 +163,7 @@ EOF
 ```
 
 ```bash
-kubectl create configmap nginx-config-map --from-▒▒▒▒=nginx.conf 
+kubectl create configmap nginx-config-map --from-file=nginx.conf 
 ```
 
 ```yaml
