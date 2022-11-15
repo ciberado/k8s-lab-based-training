@@ -55,7 +55,7 @@ echo We are going to use $FRONT_END_NODE
 * Tag it with the new label
 
 ```
-kubectl ▒▒▒▒▒ ▒▒▒▒ "$FRONT_END_NODE" programar.cloud/$USER-owned=$USER
+kubectl ▒▒▒▒▒ ▒▒▒▒ "$FRONT_END_NODE" aprender.cloud/$USER-owned=$USER
 ```
 
 * Create a deployment specifying labels for selecting the node:
@@ -77,7 +77,7 @@ spec:
         programar.cloud/tier: frontend
     spec:
       ▒▒▒▒▒▒▒▒▒▒▒▒:
-        programar.cloud/$USER-owned: $USER
+        aprender.cloud/$USER-owned: $USER
       containers:
       - name: nginx
         image: nginx
