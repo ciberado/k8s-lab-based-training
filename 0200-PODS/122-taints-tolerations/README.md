@@ -16,7 +16,8 @@ kubectl config set-context --namespace demo-$USER --current
 * Get one node, we will use it as our *taint* target
 
 ```
-export SPECIAL_NODE="$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')"
+NODE_NUMBER=$(echo $USER | tr -dc '0-9')
+export SPECIAL_NODE="$(kubectl get nodes -o jsonpath={.items[$NODE_NUMBER].metadata.name})"
 echo We are going to use $SPECIAL_NODE
 ```
 
