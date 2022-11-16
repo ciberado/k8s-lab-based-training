@@ -64,6 +64,12 @@ EOF
 time ./go/bin/kind create cluster --name local-cluster --config kind-config.yaml ^C
 ```
 
+* Update the config file (optional, as it is automatically updated by the `kind create cluster` command)
+
+```bash
+./go/bin/kind export kubeconfig --name local-cluster
+```
+
 ## Validate cluster configuration
 
 * Check the *nodes* infrastructure
