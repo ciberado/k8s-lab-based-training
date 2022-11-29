@@ -68,7 +68,7 @@ kubectl get servicemonitor
 
 ```bash
 EXPORTER=$(kubectl get pod \
-  -l app=prometheus-node-exporter \
+  -l jobLabel=node-exporter \
   -o jsonpath={.items[0].metadata.name}\
 )
 echo Showing $EXPORTER logs.
