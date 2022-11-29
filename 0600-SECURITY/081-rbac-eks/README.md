@@ -131,17 +131,6 @@ kubectl api-resources -owide \
   | awk 'NR==1 || /(^pods )|(deployment)|(^services )|(secrets)|(configmap)|(events)/'
 ```
 
-* For once in your life, **take five minutes to RTFM** (about [pods](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#-strong-write-operations-pod-v1-core-strong-) and [deployments](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#create-deployment-v1-apps), for example) understanding how `api-groups` are just the way different resources are classified together. In particular, check the *REST* addresses associated with them. Here you will find some common ones:
-
-```
-POST /api/v1/namespaces/{namespace}/pods
-POST /api/v1/namespaces/{namespace}/services
-GET /api/v1/namespaces/{namespace}/secrets/{name}
-POST /apis/apps/v1/namespaces/{namespace}/statefulsets 
-POST /apis/apps/v1/namespaces/{namespace}/deployments 
-GET /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} 
-```
-
 * Define the `Role` with the list of permissions associated to the user that we will create later
 
 ```yaml
