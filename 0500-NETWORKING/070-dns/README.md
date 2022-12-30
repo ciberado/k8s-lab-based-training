@@ -142,6 +142,10 @@ kubectl exec -it bash -- wget -O- -q $NGINX_POD_DNS_NAME.demo-$USER.pod.cluster.
 kubectl delete ns demo-$USER
 ```
 
+## Additional information
+
+* This nice post about [the life of a DNS query in Kubernetes](https://www.nslookup.io/learning/the-life-of-a-dns-query-in-kubernetes/) contains details about the whole roundtrip made by any lookup request done by a pod.
+
 ## Appendix
 
 * Even if there is no DNS server up and running in the cluster, it is possible to find the IP of any `service` because they are all listed as environment variables (yes, yes, we know)
