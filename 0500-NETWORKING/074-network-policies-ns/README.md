@@ -141,3 +141,7 @@ helm uninstall calico -n default
 ```bash
 kubectl delete -f namespaces.yaml
 ```
+
+## Additional resources
+
+* [Illustrated introduction to IPTables](https://iximiuz.com/en/posts/laymans-iptables-101/) is an excellent post detailing the behavior of *netfilter*.
