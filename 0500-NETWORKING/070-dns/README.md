@@ -10,6 +10,8 @@
 * Each service has its own **cluster IP**
 * Using *kube-proxy* services can provide **pod load balancing**
 * It is possible to **manually set** the cluster IP of a service
+* Use [local caches for DNS](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/) to reduce latency and *coredns* load
+* Append a dot after each domain to avoid wasting DNS searchs. For example, resolve `google.com.` instead of `google.com` to avoid the retries forced by the `/etc/resolv.con` file
 
 ## Preparation
 
@@ -153,3 +155,4 @@ kubectl delete ns demo-$USER
 ```bash
 kubectl exec -it bash -- env | grep SERVICE
 ```
+
