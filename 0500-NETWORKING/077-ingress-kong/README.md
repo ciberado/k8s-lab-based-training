@@ -14,7 +14,7 @@ kubectl config set-context --namespace demo-$USER --current
 * Install kong controller
 
 ```bash
-kubectl apply -f https://bit.ly/k4k8s
+kubectl create -f https://raw.githubusercontent.com/Kong/kubernetes-ingress-controller/v2.10.0/deploy/single/all-in-one-dbless.yaml
 ```
 
 * Check the created resources
